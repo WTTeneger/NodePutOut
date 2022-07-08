@@ -1,0 +1,79 @@
+@import "varibles.css";
+@import "test_varibles.css";
+
+.catalog {
+
+}
+
+/*.section {*/
+/*    width: 90%;*/
+/*}*/
+.container {
+    max-width: 90%;
+}
+
+.catalog_flex {
+    display: flex;
+    row-gap: 1rem;
+    column-gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center
+}
+.new__container {
+    /*max-width: 242px;*/
+}
+
+.tag_rare {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    background-color: var(--base_c);
+    color: var(--title-color);
+    font-size: var(--small-font-size);
+    padding: 0.4rem 1.5rem;
+    border-radius: 0px 0px 40px 0px;
+    font-weight: bold;
+    color: black;
+    background-color: var(--base_c);
+    /* color: var(--title-color); */
+    font-size: 1rem;
+    padding: 0.4rem 1.5rem;
+    margin-left: -0.5em;
+}
+
+.new__tag {
+    display: none;
+}
+
+[type] {
+    flex-grow: 1;
+    height: auto;
+}
+
+[type='EPIC'] .tag_rare {
+    background: var(--epic_c);
+    box-shadow: 0px 0px 330px 70px var(--color-epic);
+}
+
+[type='RARE'] .tag_rare {
+    background: var(--rare_c);
+    box-shadow: 0px 0px 330px 50px var(--color-rare);
+}
+
+[type='UNCOMON'] .tag_rare {
+    background: var(--uncomon_c);
+    box-shadow: 0px 0px 330px 50px var(--color-uncomon);
+
+}
+
+[type='BASE'] .tag_rare {
+    background: var(--base_c);
+    box-shadow: 0px 0px 330px 50px var(--color-base);
+}
+
+@media screen and (min-width: 564px) {
+    [type='EPIC'] {
+        flex-grow: 9;
+        width: 35em;
+    }
+}

@@ -1,0 +1,8 @@
+:root{
+    /* Код цветов редкости*/
+    --epic_c: linear-gradient(30deg, var(--color-epic) 50%, var(--color-end) 100%);
+    --rare_c: linear-gradient(30deg, var(--color-rare) 50%, var(--color-end) 100%);
+    --uncomon_c: linear-gradient(30deg, var(--color-uncomon) 50%, var(--color-end) 100%);
+    --base_c: linear-gradient(30deg, var(--color-base) 50%, var(--color-end) 100%);
+    /*--rare_c: linear-gradient(136deg, var(--color-rare) 0%, hsla(294, 62%, 23%, 0.77) 100%);*/
+}
