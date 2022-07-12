@@ -1,7 +1,7 @@
 import Router from "express";
 import * as views from './views.js';
-import {fileURLToPath} from "url";
-import {dirname} from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 import nunjucks from 'nunjucks'
 import cors from 'cors'
 import express from "express";
@@ -34,9 +34,12 @@ router.use((req, res, next) => {
     next();
 });
 
+//Роутер маркетплейса
 router.get('/', views.app_index)
+//Роутер продукта по id
+router.get('/product/:id', views.app_product)
+
 router.get('/account', views.app_account)
 router.get('/auth', views.app_auth)
-
 
 export default router;

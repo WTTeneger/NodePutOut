@@ -1,15 +1,18 @@
 /*=============== ABOUT ===============*/
-.about{
-    &__container{
+.about {
+    &__container {
         row-gap: 2rem;
     }
-    &__data{
+
+    &__data {
         text-align: center;
     }
-    &__description{
+
+    &__description {
         margin-bottom: var(--mb-2);
     }
-    &__img{
+
+    &__img {
         width: 200px;
         justify-self: center;
     }

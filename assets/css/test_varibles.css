@@ -1,8 +1,22 @@
-:root{
+:root {
+    --color-end: hsl(0, 12%, 29%);
+
+    /*========== rarity color ==========*/
+    --color-base: #FFFFFFFF;
+    --color-common: hsl(158deg 94% 47%);
+    --color-uncommon: hsl(192deg 100% 49%);
+    --color-rare: hsl(272deg 100% 48%);
+    --color-super-rare: hsl(314deg 66% 54%);
+    --color-epic: hsl(27deg 94% 56%);
+    --color-legendary: hsl(45deg 98% 55%);
+
     /* Код цветов редкости*/
-    --epic_c: linear-gradient(30deg, var(--color-epic) 50%, var(--color-end) 100%);
-    --rare_c: linear-gradient(30deg, var(--color-rare) 50%, var(--color-end) 100%);
-    --uncomon_c: linear-gradient(30deg, var(--color-uncomon) 50%, var(--color-end) 100%);
     --base_c: linear-gradient(30deg, var(--color-base) 50%, var(--color-end) 100%);
+    --common_c: linear-gradient(30deg, var(--color-common) 50%, var(--color-end) 100%);
+    --uncommon_c: linear-gradient(30deg, var(--color-uncommon) 50%, var(--color-end) 100%);
+    --rare_c: linear-gradient(30deg, var(--color-rare) 50%, var(--color-end) 100%);
+    --super-rare_c: linear-gradient(30deg, var(--color-super-rare) 50%, var(--color-end) 100%);
+    --epic_c: linear-gradient(30deg, var(--color-epic) 50%, var(--color-end) 100%);
+    --legendary_c: linear-gradient(30deg, var(--color-legendary) 50%, var(--color-end) 100%);
     /*--rare_c: linear-gradient(136deg, var(--color-rare) 0%, hsla(294, 62%, 23%, 0.77) 100%);*/
 }

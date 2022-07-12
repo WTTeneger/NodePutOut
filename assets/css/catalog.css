@@ -1,9 +1,7 @@
 @import "varibles.css";
 @import "test_varibles.css";
 
-.catalog {
-
-}
+.catalog {}
 
 /*.section {*/
 /*    width: 90%;*/
@@ -19,6 +17,55 @@
     flex-wrap: wrap;
     justify-content: center
 }
+
+
+.new__button_owner {
+    transition: .5s;
+    display: inline-flex;
+    padding: 0.5rem;
+    border-radius: 0.25rem 0.25rem 0.75rem 0.25rem;
+    position: absolute;
+    bottom: 0;
+    left: -10rem;
+    width: max-content;
+    align-items: center;
+}
+
+.button_owner {
+    transition: .5s;
+    display: inline-flex;
+    padding: 0rem;
+    border-radius: 0rem 0rem 0rem 1rem;
+    /* border-radius: 0.25rem 0.25rem 0.75rem 0.25rem; */
+    position: absolute;
+    top: 0;
+    right: -10rem;
+    width: max-content;
+    align-items: center;
+    transition: 0.4s;
+}
+
+
+[type] .new__button_owner img,
+[type] .button_owner img {
+    /* width: 2rem; */
+    width: 1.9rem;
+    margin: 4px;
+    border-radius: 20px;
+    padding-right: 0.10rem;
+}
+
+[type]:hover .new__button_owner {
+    background: 0;
+    left: 0rem;
+}
+
+[type]:hover .button_owner {
+    /* background: 0;    */
+    right: 0rem;
+}
+
+
 .new__container {
     /*max-width: 242px;*/
 }
@@ -46,34 +93,126 @@
 }
 
 [type] {
+    width: 21%;
     flex-grow: 1;
     height: auto;
-}
-
-[type='EPIC'] .tag_rare {
-    background: var(--epic_c);
-    box-shadow: 0px 0px 330px 70px var(--color-epic);
-}
-
-[type='RARE'] .tag_rare {
-    background: var(--rare_c);
-    box-shadow: 0px 0px 330px 50px var(--color-rare);
-}
-
-[type='UNCOMON'] .tag_rare {
-    background: var(--uncomon_c);
-    box-shadow: 0px 0px 330px 50px var(--color-uncomon);
+    /* border-radius: 12px; */
+    /* background: none; */
+    /* background-color: rgba(240, 248, 255, 0); */
 
 }
 
-[type='BASE'] .tag_rare {
+[type] .bg_shadow {
     background: var(--base_c);
-    box-shadow: 0px 0px 330px 50px var(--color-base);
+    box-shadow: 0px 0px 330px 70px;
+    color: var(--color-base);
 }
 
-@media screen and (min-width: 564px) {
-    [type='EPIC'] {
-        flex-grow: 9;
-        width: 35em;
+[type] .bg {
+    background: var(--base_c);
+}
+
+[type='LEGENDARY'] .bg_shadow {
+    background: var(--legendary_c);
+    box-shadow: 0px 0px 330px 70px;
+    color: var(--color-legendary);
+}
+
+
+
+[type='COMMON'] .bg_shadow {
+    background: var(--common_c);
+    box-shadow: 0px 0px 330px 70px;
+    color: var(--color-common);
+}
+
+[type='COMMON'] .bg {
+    background: var(--common_c);
+}
+
+[type='UNCOMMON'] .bg_shadow {
+    background: var(--uncommon_c);
+    box-shadow: 0px 0px 330px 70px;
+    color: var(--color-uncommon);
+}
+
+[type='UNCOMMON'] .bg {
+    background: var(--uncommon_c);
+}
+
+[type='RARE'] .bg_shadow {
+    background: var(--rare_c);
+    box-shadow: 0px 0px 330px 70px;
+    color: var(--color-rare);
+}
+
+[type='RARE'] .bg {
+    background: var(--rare_c);
+}
+
+[type='SRARE'] .bg_shadow {
+    background: var(--super-rare_c);
+    box-shadow: 0px 0px 330px 70px;
+    color: var(--color-super-rare);
+}
+
+[type='SRARE'] .bg {
+    background: var(--super-rare_c);
+}
+
+[type='EPIC'] .bg_shadow {
+    background: var(--epic_c);
+    box-shadow: 0px 0px 330px 70px;
+    color: var(--color-epic);
+}
+
+[type='EPIC'] .bg {
+    background: var(--epic_c);
+}
+
+
+[type='LEGENDARY'] .bg_shadow {
+    background: var(--legendary_c);
+    box-shadow: 0px 0px 330px 70px;
+    color: var(--color-legendary);
+}
+
+
+[type='LEGENDARY'] .bg {
+    background: var(--legendary_c);
+}
+
+[type] .bg_shadow legend {
+    color: black;
+}
+
+[type] .bg_shadow {
+    transition: .6s;
+}
+
+[type]:hover .bg_shadow {
+
+    box-shadow: 0px 0px 400px 20px;
+}
+
+
+/* медиа скрин для пк */
+@media screen and (min-width: 1024px) {
+    [type] {
+        width: 23%;
+    }
+}
+
+/* медиа скрин для планшетов */
+@media screen and (max-width: 768px) {
+    [type] {
+        width: 25%;
+    }
+}
+
+/* медиа скрин для телефонов  */
+@media screen and (max-width: 563px) {
+    [type] {
+        width: 40%;
     }
 }
