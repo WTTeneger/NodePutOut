@@ -142,16 +142,16 @@
         <div class="new__container container">
             <div class="catalog_flex">
                 {% for el in product %}
-                <div to-url="{}" type="{{el.item.rarity}}" class="new__content swiper-slide">
-                    <div class="tag_rare  bg_shadow">
-                        <legend>{{el.item.rarity}}1</legend>
+                <div to-url="/app/item/{{ el.item.id }}" type="{{el.item.rarity}}" class="new__content swiper-slide">
+                    <div class="tag_rare bg_shadow">
+                        <legend>{{el.item.rarity}}</legend>
                     </div>
                     <div class="new__tag">New</div>
                     <img src="/img/{{el.item.image}}" alt="" class="new__img">
                     <h3 class="new__title">{{el.item.name}}</h3>
                     <span class="new__subtitle">{{el.item.type}}</span>
 
-                    <a href="/user/{{ el.item.owner.id }}" class="button button_owner bg">
+                    <a to-url="/app/user/{{ el.item.owner.id }}" class="button button_owner bg">
                         <img src="{{el.item.owner.image}}">
                     </a>
 

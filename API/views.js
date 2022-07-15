@@ -259,13 +259,14 @@ export async function api_user_login(req, res) {
         let refreshToken = jwt.sign({ id: user._id }, settings.RT_SECRET, { expiresIn: settings.JWT_RT_TA })
         user.refresh_token = refreshToken;
         user.save();
+        res.cookie('JWT-Token', token, { maxAge: 90_000_000, httpOnly: true })
         res.status(200).json({
             message: 'Авторизация прошла успешно',
             data: {
                 token: token,
                 refreshToken: refreshToken,
-                // user: user,
-            }
+            },
+            code: '0002'
         })
     } catch (error) {
         console.log("error", error)
@@ -275,6 +276,29 @@ export async function api_user_login(req, res) {
         })
     }
 }
+
+// функция деавторизации пользователя
+export async function api_user_logout(req, res) {
+    try {
+        console.log("user");
+        console.log(req.user);
+        req.user.refresh_token = null;
+        await req.user.save()
+        res.clearCookie('JWT-Token')
+        res.clearCookie('RT-Token')
+        res.status(200).json({
+            message: 'Вы вышли из системы',
+        })
+    } catch (error) {
+        // console.log("error", error)
+        res.status(400).json({
+            message: 'Не все поля заполнены',
+            err: error.message.split(', ')
+        })
+    }
+}
+
+
 
 // функция для обновления токена пользователя
 export async function api_user_refresh(req, res) {
@@ -294,16 +318,17 @@ export async function api_user_refresh(req, res) {
         let refresh_token = jwt.sign({ id: user._id }, settings.RT_SECRET, { expiresIn: settings.JWT_RT_TA })
         user.refresh_token = refresh_token;
         user.save();
+        res.cookie('JWT-Token', token, { maxAge: 90_000_000, httpOnly: true })
         res.status(200).json({
             message: 'Токен обновлен',
             data: {
                 token: token,
                 refreshToken: refresh_token,
-                // user: user,
-            }
+            },
+            code: '0001'
         })
     } catch (error) {
-        console.log("error", error)
+        // console.log("error", error)
         res.status(400).json({
             message: 'Не все поля заполнены',
             err: error.message.split(', ')

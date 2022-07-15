@@ -15,14 +15,13 @@ import reload from 'reload';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
+import logger from './middleware/logger.js'
 
 const PORT = 8000;
 // const DB_URL = 'mongodb+srv://root:pass@nodejsdb.ngo1hlm.mongodb.net/?retryWrites=true&w=majority';
 
 const app = express()
 console.log(__dirname)
-
 app.use(express.static(__dirname + '/assets'));
 app.engine('html', ejq.renderFile);
 app.use(express.json())
@@ -32,7 +31,7 @@ app.set('views', __dirname + '/templates');
 app.use('/', router)
 app.use('/app', appRouter)
 app.use('/api', apiRouter)
-// app.use('/admin', adminRouter)
+
 
 let db = mongoose.connect('mongodb://127.0.0.1:27017/test-db');
 // Create your Forest Admin agent

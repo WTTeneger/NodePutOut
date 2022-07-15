@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block header %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--=============== FAVICON ===============-->
+<link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
+
+<!--=============== BOXICONS ===============-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+<!--=============== SWIPER CSS ===============-->
+<link rel="stylesheet" href="/css/swiper-bundle.min.css">
+<!--=============== CSS ===============-->
+<link rel="stylesheet" href="/css/styles.css">
+<!-- <link rel="stylesheet" href="/css/catalog.css"> -->
+<link rel="stylesheet" href="/css/product.css">
+<link rel="stylesheet" href="/css/auth.css">
+
+<!--=============== JS WEB3 ===============-->
+<script type="module" src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+<!-- <script language="javascript" type="text/javascript" src="/js/web3.min.js"></script> -->
+<!-- <script language="javascript" type="text/javascript" src="/artifact/DAO.json"></script> -->
+<title>{{title}} - {{page}}</title>
+{% endblock %}
+
+{% block content %}
+<main class="main">
+    <!--==================== DISCOUNT ====================-->
+    <section class="section discount">
+        <div class="discount__container container grid">
+            <form action="/api/user/login" method="POST">
+                <div class="discount__data auth_data">
+                    <input type="input" name="email" required>
+                    <input type="password" name="password" required>
+                    <input type="submit" value="Войти" class="btn btn-primary">
+                </div>
+            </form>
+
+            <img src="/img/discount-img.png" alt="" class="discount__img">
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+</body>
+
+</html>

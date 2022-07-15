@@ -571,6 +571,7 @@ button {
   padding: 0 .5rem;
   background: none;
   color: var(--title-color);
+  pointer-events: all;
 }
 
 .newsletter__input::placeholder {

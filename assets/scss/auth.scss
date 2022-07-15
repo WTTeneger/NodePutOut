@@ -1,0 +1,44 @@
+@import "varibles.css";
+@import "test_varibles.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+
+.auth_data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 2rem;
+    width: 80%;
+    margin: 0 auto;
+
+}
+
+.auth_data input {
+    pointer-events: all;
+    width: 100%;
+    height: 3rem;
+    border-radius: 10px;
+    // border: 1px solid #ccc;
+    padding: .5rem;
+    font-size: 1.2rem;
+    font-family: 'Oswald', sans-serif;
+    outline: none;
+
+
+}
+
+.auth_data input[type='input'] {
+    padding-left: 2rem;
+}
+
+.auth_data input[type='submit'] {
+    // border: 1px solid #ccc;
+    transition: 0.2s;
+    background-color: var(--color-common);
+}
+
+.auth_data input[type='submit']:hover {
+    // border-radius: 20px;
+    box-shadow: 0 0 20px 0 var(--color-common);
+}

@@ -7,9 +7,11 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "sass-watch": "sass --no-source-map --watch ./assets/scss/elem-page.scss ./assets/css/elem-page.css",
+    "sass-watch-1": "sass --no-source-map --watch ./assets/scss/elem-page.scss ./assets/css/elem-page.css",
+    "sass-watch-2": "sass --no-source-map --watch ./assets/scss/product.scss ./assets/css/product.css",
+    "sass-watch-3": "sass --no-source-map --watch ./assets/scss/auth.scss ./assets/css/auth.css",
     "nodemon-watch": "nodemon index.js -e html,js,css,scss",
-    "dev2": "npm-run-all --parallel sass-watch nodemon-watch"
+    "dev2": "npm-run-all --parallel sass-watch-1 sass-watch-2 sass-watch-3 nodemon-watch"
   },
   "keywords": [],
   "author": "",

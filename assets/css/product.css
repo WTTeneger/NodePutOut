@@ -1,0 +1,244 @@
+@charset "UTF-8";
+@import "varibles.css";
+@import "test_varibles.css";
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap");
+:root {
+  --color-end: hsl(0, 12%, 29%);
+  /*========== rarity color ==========*/
+  --color-base: #FFFFFFFF;
+  --color-common: hsl(158deg 94% 47%);
+  --color-uncommon: hsl(192deg 100% 49%);
+  --color-rare: hsl(272deg 100% 48%);
+  --color-super-rare: hsl(314deg 66% 54%);
+  --color-epic: hsl(27deg 94% 56%);
+  --color-legendary: hsl(45deg 98% 55%);
+  /* Код цветов редкости*/
+  --base_c: linear-gradient(30deg, var(--color-base) 50%, var(--color-end) 100%);
+  --common_c: linear-gradient(30deg, var(--color-common) 50%, var(--color-end) 100%);
+  --uncommon_c: linear-gradient(30deg, var(--color-uncommon) 50%, var(--color-end) 100%);
+  --rare_c: linear-gradient(30deg, var(--color-rare) 50%, var(--color-end) 100%);
+  --super-rare_c: linear-gradient(30deg, var(--color-super-rare) 50%, var(--color-end) 100%);
+  --epic_c: linear-gradient(30deg, var(--color-epic) 50%, var(--color-end) 100%);
+  --legendary_c: linear-gradient(30deg, var(--color-legendary) 50%, var(--color-end) 100%);
+  /*--rare_c: linear-gradient(136deg, var(--color-rare) 0%, hsla(294, 62%, 23%, 0.77) 100%);*/
+}
+
+.swiper-wrapper {
+  margin: 0 auto;
+}
+
+.home__img {
+  height: 15rem;
+  object-fit: cover;
+}
+
+.inside-bs {
+  box-shadow: inset 0px 0px 20px 0px rgba(89, 84, 101, 0.75);
+  box-shadow: 0px 0px 9px 2px rgba(96, 83, 83, 0.43);
+}
+
+[type] {
+  font-family: "Oswald", sans-serif;
+  box-shadow: 0px 0px 5rem 3px;
+  pointer-events: none;
+  padding: 0.15rem 2rem;
+  font-style: bold;
+  width: max-content;
+  border-radius: 10px;
+  background: DarkGray;
+  color: black;
+}
+[type] input {
+  pointer-events: all;
+}
+
+[type=COMMON] {
+  font-family: "Oswald", sans-serif;
+  box-shadow: 0px 0px 5rem 3px;
+  pointer-events: none;
+  padding: 0.15rem 2rem;
+  font-style: bold;
+  width: max-content;
+  border-radius: 10px;
+  background: var(--color-common);
+  color: black;
+}
+
+[type=UNCOMMON] {
+  font-family: "Oswald", sans-serif;
+  box-shadow: 0px 0px 5rem 3px;
+  pointer-events: none;
+  padding: 0.15rem 2rem;
+  font-style: bold;
+  width: max-content;
+  border-radius: 10px;
+  background: var(--color-common);
+  color: black;
+}
+
+[type=RARE] {
+  font-family: "Oswald", sans-serif;
+  box-shadow: 0px 0px 5rem 3px;
+  pointer-events: none;
+  padding: 0.15rem 2rem;
+  font-style: bold;
+  width: max-content;
+  border-radius: 10px;
+  background: var(--color-rare);
+  color: black;
+}
+
+[type=SRARE] {
+  font-family: "Oswald", sans-serif;
+  box-shadow: 0px 0px 5rem 3px;
+  pointer-events: none;
+  padding: 0.15rem 2rem;
+  font-style: bold;
+  width: max-content;
+  border-radius: 10px;
+  background: var(--color-super-rare);
+  color: black;
+}
+
+[type=EPIC] {
+  font-family: "Oswald", sans-serif;
+  box-shadow: 0px 0px 5rem 3px;
+  pointer-events: none;
+  padding: 0.15rem 2rem;
+  font-style: bold;
+  width: max-content;
+  border-radius: 10px;
+  background: var(--color-epic);
+  color: black;
+}
+
+[type=LEGENDARY] {
+  font-family: "Oswald", sans-serif;
+  box-shadow: 0px 0px 5rem 3px;
+  pointer-events: none;
+  padding: 0.15rem 2rem;
+  font-style: bold;
+  width: max-content;
+  border-radius: 10px;
+  background: var(--color-legendary);
+  color: black;
+}
+
+.bg-gradient {
+  box-shadow: inset 20px -px 20px 0px rgba(32, 61, 122, 0.5411764706), inset -20px 19px 20px 0px #2e8183;
+}
+
+.box:before {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(-142deg, #ff3d00 0%, #0400ff 73%);
+  transform: translate3d(0px, 0px, 0) scale(1.17);
+  filter: blur(12px);
+  opacity: var(0.7);
+  transition: opacity 0.3s;
+  border-radius: inherit;
+}
+
+section {
+  width: inherit;
+}
+
+.price-block {
+  cursor: default;
+  box-shadow: inset 1px 0px 5px 1px rgb(39, 35, 33);
+  justify-content: space-between;
+  padding: 30px 30px;
+  margin: 0.3rem;
+  background-color: #1c1a17;
+  border-radius: 10px;
+  height: fit-content;
+}
+.price-block hr {
+  margin: 1rem 0px;
+  height: 2px;
+  border-width: 0;
+  color: gray;
+  background-color: rgb(47, 47, 47);
+}
+.price-block .price-line {
+  width: 100%;
+  height: 20%;
+  height: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.price-block .price-line .price h1 {
+  font-size: 0.8rem;
+  color: rgb(159, 159, 159);
+}
+.price-block .price-line .price paragraph {
+  font-size: 1.1rem;
+  color: rgb(255, 255, 255);
+}
+.price-block .price-line .buy-button {
+  height: 3rem;
+  width: 10rem;
+  border-radius: 5px;
+  transition: 0.4s;
+  box-shadow: 0px 9px 14px -2px;
+  color: none;
+}
+.price-block .price-line .buy-button:hover {
+  background-color: #1c1a17;
+  color: #fff;
+  box-shadow: 0px 9px 14px -2px var(--color-common);
+}
+.price-block .desc-line {
+  width: 100%;
+  height: 20%;
+  height: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.price-block .desc-line h1 {
+  font-size: 0.5rem;
+  color: rgb(159, 159, 159);
+}
+.price-block .desc-line .buy-button {
+  height: 3rem;
+  width: 10rem;
+  border-radius: 10px;
+}
+.price-block .desc-line .owner-block {
+  display: flex;
+  align-items: center;
+}
+.price-block .desc-line .owner-block h1 {
+  font-size: 0.6rem;
+  padding-right: 0.3rem;
+  font-weight: 100;
+}
+.price-block .desc-line .owner {
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  background: #4d4a47;
+  padding: 0;
+  border-radius: 20px;
+  box-shadow: 0px 5px 20px -2px black;
+}
+.price-block .desc-line .owner .avatar {
+  width: 2rem;
+  border-radius: 30px;
+}
+.price-block .desc-line .owner .nickname {
+  font-size: 0.8rem;
+  color: rgb(255, 255, 255);
+  margin: 0 0.6rem;
+}
+.price-block .desc-line .owner:hover {
+  cursor: pointer;
+  transform: translateY(-0.05rem);
+}

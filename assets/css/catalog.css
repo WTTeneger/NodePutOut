@@ -32,6 +32,7 @@
 }
 
 .button_owner {
+    pointer-events: all;
     transition: .5s;
     display: inline-flex;
     padding: 0rem;
@@ -62,6 +63,7 @@
 
 [type]:hover .button_owner {
     /* background: 0;    */
+
     right: 0rem;
 }
 
@@ -100,6 +102,16 @@
     /* background: none; */
     /* background-color: rgba(240, 248, 255, 0); */
 
+}
+
+
+[type]>*,
+[type] img {
+    pointer-events: none;
+}
+
+[type] .button_owner {
+    pointer-events: all;
 }
 
 [type] .bg_shadow {

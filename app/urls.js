@@ -6,9 +6,9 @@ import nunjucks from 'nunjucks'
 import cors from 'cors'
 import express from "express";
 import path from 'path';
-
+import logger from '../middleware/logger.js'
 import cookieParser from "cookie-parser";
-
+import onlyNoAuth from '../middleware/onlyNoAuth.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -19,6 +19,8 @@ router.set('view engine', 'html')
 router.use('/', express.static(path.join(__dirname, '/assets')))
 
 router.use(cors())
+
+router.use(logger)
 
 
 router.use(cookieParser());
@@ -37,9 +39,9 @@ router.use((req, res, next) => {
 //Роутер маркетплейса
 router.get('/', views.app_index)
 //Роутер продукта по id
-router.get('/product/:id', views.app_product)
+router.get('/item/:id', views.app_item)
 
 router.get('/account', views.app_account)
-router.get('/auth', views.app_auth)
+router.get('/auth', onlyNoAuth, views.app_auth)
 
 export default router;
