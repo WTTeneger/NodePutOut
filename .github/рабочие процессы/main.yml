@@ -38,6 +38,7 @@ jobs:
       - name: Setup Node.js environment
         run: |
           npm i --force
+          
       - name: Start Node
         run: |
           npm run dev2
