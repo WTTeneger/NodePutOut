@@ -34,3 +34,11 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+      
+      - name: Setup Node.js environment
+        run: |
+          npm i
+      - name: Start Node
+        run: |
+          npm run dev2
+        
