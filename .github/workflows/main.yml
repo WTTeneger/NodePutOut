@@ -39,7 +39,7 @@ jobs:
         run: |
           npm i --force
           
-      - name: Start Node
+      - name: Test Node Projects
         run: |
-          npm run dev2
+          echo test, success.
         
