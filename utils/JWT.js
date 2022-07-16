@@ -38,16 +38,3 @@ class JWT {
         return { _jwt_t, _rt_t }
     }
 }
-
-// let _jwt = new JWT(privateKey, "1h", "20d");
-// let t = _jwt.create_jwt({ id: '12312', rights: 'user' });
-// let worked = _jwt.check_worked_token(t)
-// console.log('worked', worked)
-// await sleep(5)
-// worked = _jwt.check_worked_token(t)
-// let data = _jwt.get_data_from_jwt(t)
-// console.log('worked', worked)
-// console.log('data', data)
-
-
-// export default { _jwt }

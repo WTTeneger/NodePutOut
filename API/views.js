@@ -6,14 +6,15 @@ import jwt from 'jsonwebtoken'
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import * as settings from "../settings.js";
+import logger from '../middleware/logger.js';
 var db = mongoose.models
-console.log(db);
 
-console.log('sett', settings);
+
+
 
 
 export async function api_index(req, res) {
-    console.log(mongoose.models.Product.find());
+
     // let res_data = generate_header({
     //     'product': await db.Product.find({}),
     // })
@@ -26,6 +27,7 @@ export async function api_index(req, res) {
 // функция создания продукта (только для админа)
 export async function api_product_create(req, res) {
     try {
+        let owner = req.body.owner ? req.body.owner : null;
         let item = new db.Item({
             name: req.body.name,
             description: req.body.description,
@@ -34,7 +36,8 @@ export async function api_product_create(req, res) {
             rarity: req.body.rarity,
             type: req.body.type,
         })
-        let d = await db.Item.find({ name: req.body.name }).exec(console.log('err'));
+        item.owner = owner
+        let d = db.Item.find({ name: req.body.name }).exec(console.log('err'));
         if (d.length > 0) {
             res.status(400).json({
                 message: 'Предмет с таким названием уже есть (Измените название)',
@@ -42,7 +45,7 @@ export async function api_product_create(req, res) {
             })
             return res;
         } else {
-            console.log('ss');
+
             await item.save()
             res.status(200).json({
                 message: 'Итем создан',
@@ -50,7 +53,7 @@ export async function api_product_create(req, res) {
             })
         }
     } catch (error) {
-        console.log("error", error)
+
         res.status(404).json({
             message: 'Не все поля заполнены'
         })
@@ -67,6 +70,7 @@ export async function api_product_update(req, res) {
             category: req.body.category,
             rarity: req.body.rarity,
             type: req.body.type,
+            owner: req.body.owner,
         })
 
         res.status(201).json({
@@ -74,7 +78,7 @@ export async function api_product_update(req, res) {
             data: await item,
         })
     } catch (error) {
-        console.log("error", error)
+
         res.status(400).json({
             message: 'Ошибка обновления',
             err: error
@@ -85,18 +89,59 @@ export async function api_product_update(req, res) {
 // функция удаления продукта (только для админа)
 export async function api_product_delete(req, res) {
     try {
-        let item = await db.Item.findByIdAndDelete(req.params.id)
-        res.status(200).json({
-            message: 'Итем удален',
-            data: item,
-        })
+
+        let item = await db.Item.findById(req.params.id)
+        let marketitem = await db.MarketItem.findOne({ item: item.id })
+
+
+        if (item) {
+            // await db.MarketItem.deleteMany({ item: item.id })
+            await item.remove()
+            await marketitem.remove()
+            res.status(200).json({
+                message: 'Итем удален',
+                data: item,
+            })
+        } else {
+            res.status(404).json({
+                message: 'Итем не найден',
+                field: 'id',
+            })
+        }
+
     } catch (error) {
-        console.log("error", error)
+
         res.status(400).json({
             message: 'Ошибка удаления',
             err: error
         })
     }
+}
+
+export async function api_marketitem_delete(req, res) {
+    try {
+        let item = await db.MarketItem.findById(req.params.id)
+        if (item) {
+            await item.remove()
+            res.status(200).json({
+                message: 'Итем удален',
+                data: item,
+            })
+        } else {
+            res.status(404).json({
+                message: 'Итем не найден',
+                field: 'id',
+            })
+        }
+
+    } catch (error) {
+
+        res.status(400).json({
+            message: 'Ошибка удаления',
+            err: error
+        })
+    }
+
 }
 
 // функция получения продукта по id
@@ -115,11 +160,18 @@ export async function api_product_get_all(req, res) {
     res.status(200).json(res_data)
 }
 
+// функция получения всех маркет итемовы
+export async function api_marketitem_get_all(req, res) {
+    let res_data = {
+        'product': await db.MarketItem.find({})
+    }
+    res.status(200).json(res_data)
+}
+
 // функция создания продукта на маркете
 export async function api_marketitem_create(req, res) {
-    console.log('uid', uid);
     try {
-        console.log(req.body);
+
         let item = new db.MarketItem({
             item: req.body.id,
             price: req.body.price,
@@ -128,9 +180,9 @@ export async function api_marketitem_create(req, res) {
         // Если есть такой в бд выдать ошибку
         // найти Итем с таким id FindById
         let ItemInDB = await db.Item.findById({ _id: req.body.id });
-        // console.log(ItemInDB);
+        // 
         // let ItemInDB = await db.Item.find({ _id: req.body.id });
-        console.log('ItemInDB', ItemInDB);
+
         if (ItemInDB == null) {
             res.status(400).json({
                 message: 'Предмета с таким id нет в бд',
@@ -141,7 +193,7 @@ export async function api_marketitem_create(req, res) {
 
         // let shopItemInDB = await db.MarketItem.find({ item: req.body.id });
         let shopItemInDB = await db.MarketItem.find({ item: req.body.id });
-        console.log('shopItemInDB', shopItemInDB);
+
         if (shopItemInDB.length > 0) {
             res.status(400).json({
                 message: 'Данный предмет уже есть в магазине',
@@ -149,7 +201,7 @@ export async function api_marketitem_create(req, res) {
             })
             return res;
         }
-        console.log('ss');
+
         await item.save()
         res.status(200).json({
             message: 'Итем магазина создан',
@@ -157,12 +209,71 @@ export async function api_marketitem_create(req, res) {
         })
     }
     catch (error) {
-        console.log("error", error)
+
         res.status(400).json({
             message: 'Не все поля заполнены'
         })
     }
 }
+
+// функция покупки продукта на маркете по id которая вычетает баланс и передает предмет покупателю
+export async function api_marketitem_buy(req, res) {
+    try {
+        let item = await db.MarketItem.findById(req.params.id).populate(
+            {
+                path: 'item',
+                populate: {
+                    path: 'owner',
+                },
+            })
+        let user = req.user;
+        if (item == null) {
+            res.status(404).json({
+                message: 'Предмета с таким id нет в бд',
+                field: 'name',
+            })
+            return res;
+        }
+        if (item.item.owner.id == user.id) {
+            res.status(400).json({
+                message: 'Вы не можете покупать этот предмет',
+                field: 'name',
+            })
+            return res;
+        }
+        if (user.balance < item.price) {
+            res.status(400).json({
+                message: 'Недостаточно средств',
+                field: 'balance',
+            })
+            return res;
+        }
+
+        user.balance -= item.price;
+        user.save()
+        item.item.owner.balance += item.price;
+        item.item.owner.save()
+        item.item.owner = user;
+        item.item.save()
+        await db.MarketItem.findByIdAndDelete(req.params.id)
+        res.status(200).json({
+            message: 'Предмет куплен',
+            data: item.item,
+            code: '0003',
+            url: '/app/account/'
+        })
+    }
+    catch (error) {
+
+        res.status(400).json({
+            message: 'Ошибка покупки',
+            err: error
+        })
+    }
+}
+
+
+
 
 // функция создания пользователя
 export async function api_user_create(req, res) {
@@ -183,7 +294,7 @@ export async function api_user_create(req, res) {
             })
             return res;
         } else {
-            console.log('ss');
+
             await user.save()
             res.status(200).json({
                 message: 'Пользователь создан',
@@ -206,13 +317,51 @@ export async function api_user_by_id(req, res) {
         }
         res.status(200).json(res_data)
     } catch (error) {
-        console.log("error", error)
+
         res.status(404).json({
             message: 'Ошибка поиска',
             err: error.message
         })
     }
 }
+
+// функция обновления пользователя по id
+export async function api_user_update(req, res) {
+    try {
+        let user = await db.Client.findById(req.params.id, {})
+        if (user == null) {
+            res.status(404).json({
+                message: 'Пользователя с таким id нет в бд',
+                field: 'id',
+            })
+        }
+        if (req.body.password) {
+            const salt = await bcrypt.genSalt(12);
+            user.password = await bcrypt.hash(req.body.password, salt);
+        }
+        if (req.body.name) {
+            user.name = req.body.name;
+        }
+        if (req.body.email) {
+            user.email = req.body.email;
+        }
+        if (req.body.balance) {
+            user.balance = req.body.balance;
+        }
+        await user.save()
+        res.status(200).json({
+            message: 'Пользователь обновлен',
+            data: user,
+        })
+    } catch (error) {
+
+        res.status(404).json({
+            message: 'Ошибка обновления',
+            err: error.message
+        })
+    }
+}
+
 
 // функция удаления пользователя
 export async function api_user_delete(req, res) {
@@ -223,7 +372,7 @@ export async function api_user_delete(req, res) {
             data: user,
         })
     } catch (error) {
-        console.log("error", error)
+
         res.status(400).json({
             message: 'Ошибка удаления',
             err: error
@@ -235,8 +384,9 @@ export async function api_user_delete(req, res) {
 // функция авторизации пользователя которая возвращает jwt и refresh token
 export async function api_user_login(req, res) {
     try {
-        console.log(req.body);
+
         let user = await db.Client.findOne({ email: req.body.email })
+
         if (user == null) {
             res.status(400).json({
                 message: 'Пользователя с таким email нет в бд',
@@ -245,7 +395,6 @@ export async function api_user_login(req, res) {
             return res;
         }
         let result = await bcrypt.compare(req.body.password, user.password)
-        console.log(result);
         if (result == false) {
             res.status(400).json({
                 message: 'Неверный пароль',
@@ -255,10 +404,11 @@ export async function api_user_login(req, res) {
         }
         let JWT_SECRET = 'secret';
         let REFRESH_JWT_SECRET = 'secret';
-        let token = jwt.sign({ id: user._id, rights: user.rights }, settings.JWT_SECRET, { expiresIn: settings.JWT_JWT_TA })
-        let refreshToken = jwt.sign({ id: user._id }, settings.RT_SECRET, { expiresIn: settings.JWT_RT_TA })
+        let token = jwt.sign({ id: user.id, rights: user.rights }, settings.JWT_SECRET, { expiresIn: settings.JWT_JWT_TA })
+        let refreshToken = jwt.sign({ id: user.id }, settings.RT_SECRET, { expiresIn: settings.JWT_RT_TA })
         user.refresh_token = refreshToken;
         user.save();
+
         res.cookie('JWT-Token', token, { maxAge: 90_000_000, httpOnly: true })
         res.status(200).json({
             message: 'Авторизация прошла успешно',
@@ -266,10 +416,11 @@ export async function api_user_login(req, res) {
                 token: token,
                 refreshToken: refreshToken,
             },
-            code: '0002'
+            code: '0002',
+            url: '/app'
         })
     } catch (error) {
-        console.log("error", error)
+
         res.status(400).json({
             message: 'Не все поля заполнены',
             err: error.message.split(', ')
@@ -280,8 +431,8 @@ export async function api_user_login(req, res) {
 // функция деавторизации пользователя
 export async function api_user_logout(req, res) {
     try {
-        console.log("user");
-        console.log(req.user);
+
+
         req.user.refresh_token = null;
         await req.user.save()
         res.clearCookie('JWT-Token')
@@ -290,7 +441,7 @@ export async function api_user_logout(req, res) {
             message: 'Вы вышли из системы',
         })
     } catch (error) {
-        // console.log("error", error)
+        // 
         res.status(400).json({
             message: 'Не все поля заполнены',
             err: error.message.split(', ')
@@ -304,7 +455,7 @@ export async function api_user_logout(req, res) {
 export async function api_user_refresh(req, res) {
     try {
         let data_from_token = jwt.verify(req.body.refreshToken, settings.RT_SECRET);
-        console.log(data_from_token);
+
         let user = await db.Client.findOne({ id: data_from_token.id, refresh_token: req.body.refreshToken })
         if (user == null) {
             res.status(400).json({
@@ -328,7 +479,7 @@ export async function api_user_refresh(req, res) {
             code: '0001'
         })
     } catch (error) {
-        // console.log("error", error)
+        // 
         res.status(400).json({
             message: 'Не все поля заполнены',
             err: error.message.split(', ')
@@ -345,7 +496,7 @@ export async function api_user_get_all(req, res) {
             data: users,
         })
     } catch (error) {
-        console.log("error", error)
+
         res.status(400).json({
             message: 'Не все поля заполнены',
             err: error.message.split(', ')

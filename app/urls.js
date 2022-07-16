@@ -9,21 +9,23 @@ import path from 'path';
 import logger from '../middleware/logger.js'
 import cookieParser from "cookie-parser";
 import onlyNoAuth from '../middleware/onlyNoAuth.js';
+import setUserInReq from '../middleware/setUserInReq.js'
+import onlyAuth from "../middleware/onlyAuth.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const router = new Router();
 
-console.log(__dirname)
 router.set('view engine', 'html')
 router.use('/', express.static(path.join(__dirname, '/assets')))
 
 router.use(cors())
 
-router.use(logger)
-
-
 router.use(cookieParser());
+router.use(logger)
+router.use(setUserInReq)
+
+
 
 nunjucks.configure(__dirname + '/templates', {
     autoescape: true, express: router
@@ -41,7 +43,9 @@ router.get('/', views.app_index)
 //Роутер продукта по id
 router.get('/item/:id', views.app_item)
 
-router.get('/account', views.app_account)
-router.get('/auth', onlyNoAuth, views.app_auth)
+router.get('/account', onlyAuth, views.app_account)
+router.get('/login', onlyNoAuth, views.app_login)
+router.get('/logout', onlyAuth, views.app_logout)
+
 
 export default router;

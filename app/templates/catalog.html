@@ -18,7 +18,6 @@
 <script type="module" src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 <!-- <script language="javascript" type="text/javascript" src="/js/web3.min.js"></script> -->
 <!-- <script language="javascript" type="text/javascript" src="/artifact/DAO.json"></script> -->
-<title>{{title}} - {{page}}</title>
 {% endblock %}
 
 {% block content %}
@@ -154,15 +153,19 @@
                     <a to-url="/app/user/{{ el.item.owner.id }}" class="button button_owner bg">
                         <img src="{{el.item.owner.image}}">
                     </a>
+                    <form action="/api/marketitem/{{ el.id }}" method="POST">
+                        <!-- <input type="submit" value="Войти" class="btn btn-primary"> -->
+                        <!-- <button type="submit" class="buy-button">Buy Now</button> -->
+                        <button type="submit" style="width: fit-content;" class="button new__button bg">
+                            <i class='bx bx-cart-alt new__icon'></i>
+                        </button>
+                    </form>
 
-                    <button class="button new__button bg">
-                        <i class='bx bx-cart-alt new__icon'></i>
-                    </button>
 
                     <div class="new__prices">
-                        <span class="new__price">${{el.price}}</span>
+                        <span class="new__price">{{ settings.token }} {{ el.price }}</span>
                         {% if el.total_price %}
-                        <span class="new__discount">${{el.total_price}}</span>
+                        <span class="new__discount">${{el.total_price}} {{ settings.token }}</span>
                         {% endif %}
                     </div>
                 </div>

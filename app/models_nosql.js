@@ -42,7 +42,7 @@ export const Item = mongoose.model('Item', {
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Client',
-        default: "62cbb4b790467973a2119523",
+        default: "62cbc34442c14ddb2dcfb735",
     }
 });
 

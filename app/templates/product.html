@@ -19,7 +19,6 @@
 <script type="module" src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 <!-- <script language="javascript" type="text/javascript" src="/js/web3.min.js"></script> -->
 <!-- <script language="javascript" type="text/javascript" src="/artifact/DAO.json"></script> -->
-<title>{{title}} - {{page}}</title>
 {% endblock %}
 
 {% block content %}
@@ -35,7 +34,11 @@
                             <img src="/img/{{ item.image }}" alt="" class="home__img">
                             <div class="home__indicator"></div>
 
-                            <span class="home__details-subtitle" type="{{ item.rarity }}">{{ item.rarity }}</span>
+                            <span class="home__details-subtitle" type="{{ item.rarity }}">
+                                <h1>
+                                    {{ item.rarity }}
+                                </h1>
+                            </span>
                             <div class="home__details-img">
                                 <h4 class="home__details-title">{{item.name}}</h4>
                                 <span class="home__details-subtitle">{{ item.category }}</span>
@@ -44,6 +47,7 @@
                         </div>
                         {% if not test %}
                         <div class="home__data">
+
                             <h3 class="home__subtitle" type="{{ item.rarity }}">{{ item.rarity }}</h3>
                             <h1 class="home__title">{{ item.name }}</h1>
                             <p class="home__description"> {{ item.description }}</p>
@@ -57,14 +61,19 @@
                         </div>
                         {% else %}
                         <div class="price-block inside-bs">
+                            {% if shop.price %}
                             <div class="price-line">
                                 <div class="price">
                                     <h1>price</h1>
                                     <paragraph>{{ shop.price }} AMT</paragraph>
                                 </div>
-                                <button class="buy-button">Buy Now</button>
+                                <form action="/api/marketitem/{{ shop.id }}" method="POST">
+                                    <!-- <input type="submit" value="Войти" class="btn btn-primary"> -->
+                                    <button type="submit" class="buy-button">Buy Now</button>
+                                </form>
                             </div>
                             <hr>
+                            {% endif %}
                             <div class="desc-line">
                                 <h1>Minted 4 hours ago</h1>
                                 <div class="owner-block">

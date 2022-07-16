@@ -1,7 +1,7 @@
 $(document).click(function (e) {
     // e.preventDefault();
-    // console.log('click');
-    // console.log(sender);
+
+
 
     // Если есть атрибут to-url переадрисовывать на это значение
     if ($(e.target).attr('to-url')) {
@@ -11,9 +11,19 @@ $(document).click(function (e) {
         window.history.back();
     }
     if ($(e.target).attr('type') == 'submit') {
-        console.log('submit');
-        console.log(sender($(e.target).closest('form'), e));
+        sender($(e.target).closest('form'), e);
     }
 
+    // если у таркета есть стиль button-box
+    if ($(e.target).hasClass('button-box')) {
 
+        // Дать стиль button-active 
+        $(e.target).addClass('button-active');
+    }
+    // если нажатие не по блоку с классом button-box
+    if (!$(e.target).hasClass('button-box')) {
+        // Удалить стиль button-active у всех блоков с классом button-box
+        $('.button-box').removeClass('button-active');
+    }
 });
+

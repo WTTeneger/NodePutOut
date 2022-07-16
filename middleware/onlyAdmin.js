@@ -9,6 +9,7 @@ const onlyAdmin = async (req, res, next) => {
     try {
         if (req.user.rights === 'admin') {
             next();
+            return req;
         } else {
             res.status(403).json({
                 message: 'Недостаточно прав',

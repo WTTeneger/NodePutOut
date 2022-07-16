@@ -8,7 +8,8 @@
     <meta name="description" content="MarketPlace for PutOut">
     <meta name="author" content="WT_tini">
     <link rel="icon" href="../../favicon.ico">
-    <title>"Base"</title>
+    <title>{{site}} - {{page}}</title>
+    <link href="/css/base.css" rel="stylesheet">
     {% block header %}{% endblock %}
 </head>
 
@@ -16,6 +17,7 @@
     <script src="/js/jquery.min.js"></script>
     <script src="/js/dispatch-handler.js"></script>
     <script src="/js/handler.js"></script>
+
     <!--==================== HEADER ====================-->
     <header class="header" id="header">
         <nav class="nav container">
@@ -27,26 +29,36 @@
             <div class="nav__menu" id="nav-menu">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a href="#home" class="nav__link active-link">Home</a>
+                        <a href="#home" class="nav__link {% if page == 'home' %} active-link {%endif%}">Home</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#about" class="nav__link {% if page == 'about' %} active-link {%endif%}">About</a>
                     </li>
 
                     <li class="nav__item">
-                        <a href="#about" class="nav__link">About</a>
+                        <a href="/app" to-url="/app"
+                            class="nav__link {% if page == 'catalog' %} active-link {%endif%}">catalog</a>
                     </li>
+                    {% if user %}
+                    <div class="nav__item">
+                        <h1>{{ user.balance }} {{ settings.token }}</h1>
+                        <div class="button-box">
+                            <a id='cm_button' class="button button--ghost">{{ user.name }}</a>
 
-                    <li class="nav__item">
-                        <a href="#trick" class="nav__link">Candy</a>
+                            <div class="dropdown__drop">
+                                <ul class="dropdown-user__links">
+                                    <li><a href="/app/account/">Аккаунт</a></li>
+                                    <li><a href="/app/logout/">Выход</a></li>
+                                    <!-- <li><a href="#">...</a></li> -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <li class="nav_item">
+                        <a tu-url="/auth/" id='cm_button' href="/app/login/" class="button button--ghost">Connect</a>
                     </li>
-
-                    <li class="nav__item">
-                        <a href="#new" class="nav__link">New</a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="/app" to-url="/app" class="nav__link">catalog</a>
-                    </li>
-
-                    <a id='cm_button' href="#" class="button button--ghost" onclick=connectMetamask()>Connect wallet</a>
+                    {% endif %}
                 </ul>
 
                 <div class="nav__close" id="nav-close">
@@ -157,6 +169,7 @@
 
     <!--=============== MAIN JS ===============-->
     <script src="/js/main.js"></script>
+
     <!-- <script src="/js/w4.js"></script> -->
 </body>
 

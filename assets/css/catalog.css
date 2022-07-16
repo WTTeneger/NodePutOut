@@ -60,10 +60,15 @@
     background: 0;
     left: 0rem;
 }
+[type] .bg {
+    pointer-events: all;
+    transition: 0.2s;
+}
+[type] .bg:hover {
+    box-shadow: 0 0 70px 0px;
+}
 
 [type]:hover .button_owner {
-    /* background: 0;    */
-
     right: 0rem;
 }
 
@@ -123,6 +128,9 @@
 [type] .bg {
     background: var(--base_c);
 }
+[type] .bg i{
+    color: white;
+}
 
 [type='LEGENDARY'] .bg_shadow {
     background: var(--legendary_c);
@@ -140,6 +148,7 @@
 
 [type='COMMON'] .bg {
     background: var(--common_c);
+    color: var(--color-common);
 }
 
 [type='UNCOMMON'] .bg_shadow {
@@ -150,6 +159,7 @@
 
 [type='UNCOMMON'] .bg {
     background: var(--uncommon_c);
+    color: var(--color-uncommon);
 }
 
 [type='RARE'] .bg_shadow {
@@ -160,6 +170,7 @@
 
 [type='RARE'] .bg {
     background: var(--rare_c);
+    color: var(--color-rare);
 }
 
 [type='SRARE'] .bg_shadow {
@@ -170,6 +181,7 @@
 
 [type='SRARE'] .bg {
     background: var(--super-rare_c);
+    color: var(--color-super-rare);
 }
 
 [type='EPIC'] .bg_shadow {
@@ -180,6 +192,7 @@
 
 [type='EPIC'] .bg {
     background: var(--epic_c);
+    color: var(--color-epic);
 }
 
 
@@ -192,6 +205,7 @@
 
 [type='LEGENDARY'] .bg {
     background: var(--legendary_c);
+    color: var(--color-legendary);
 }
 
 [type] .bg_shadow legend {

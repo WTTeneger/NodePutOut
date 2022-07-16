@@ -18,7 +18,6 @@ const __dirname = dirname(__filename);
 
 const router = new Router();
 
-console.log(__dirname)
 router.set('view engine', 'html')
 router.use('/', express.static(path.join(__dirname, '/assets')))
 
@@ -39,70 +38,6 @@ router.use((req, res, next) => {
     next();
 });
 
-// функция декоратор для проверки прав доступа
-function ___onlyAdmin(f, content) {
-    return function () {
-        try {
-            let token_jwt = arguments[0].headers.authorization ? arguments[0].headers.authorization.split(' ')[1] : null;
-            console.log(token_jwt);
-            if (token_jwt) {
-                let token = jwt.verify(token_jwt, settings.JWT_SECRET);
-                console.log(token);
-                if (token.rights === 'admin') {
-                    console.log(`Доступ уровня -- ${token.rights}`);
-                    return f.apply(this, arguments);
-                }
-                arguments[0].res.status(403).json({
-                    message: 'Недостаточно прав',
-                    err: ['you dont have rights']
-                })
-            } else {
-                arguments[0].res.status(401).json({
-                    message: 'Нет доступа',
-                    err: ['you are not authorized']
-                })
-            }
-        } catch (e) {
-            arguments[0].res.status(401).json({
-                message: 'Нет доступа',
-                err: e.message.split(', ')
-            })
-        }
-    }
-}
-// функция декоратор для проверки авторизации пользователя
-function __onlyAuth(f, content) {
-    return function () {
-        try {
-            let token_jwt = arguments[0].headers.authorization ? arguments[0].headers.authorization.split(' ')[1] : null;
-            console.log(token_jwt);
-            if (token_jwt) {
-                let token = jwt.verify(token_jwt, settings.JWT_SECRET);
-                console.log(token);
-                if (token.rights === 'admin' || token.rights === 'user') {
-                    console.log(`Доступ уровня - ${token.rights}`);
-                    return f.apply(this, arguments);
-                }
-                arguments[0].res.status(403).json({
-                    message: 'Недостаточно прав',
-                    err: ['you dont have rights']
-                })
-            } else {
-                arguments[0].res.status(401).json({
-                    message: 'Нет доступа',
-                    err: ['you are not authorized']
-                })
-            }
-        } catch (e) {
-            arguments[0].res.status(401).json({
-                message: 'Нет доступа',
-                err: e.message.split(', ')
-            })
-        }
-    }
-}
-
-
 // routers 
 router.get('/', views.api_index)
 //Роутер для создания продукта
@@ -113,26 +48,35 @@ router.get('/product/:id', onlyAuth, views.api_product_by_id)
 router.put('/product/:id', [onlyAuth, onlyAdmin], views.api_product_update)
 // роутер для удаление продукта пр id
 router.delete('/product/:id', [onlyAuth, onlyAdmin], views.api_product_delete)
+router.delete('/marketitem/:id', [onlyAuth, onlyAdmin], views.api_marketitem_delete)
 // Роутер для получания всех продуктов
 router.get('/product', onlyAuth, views.api_product_get_all)
+// Роутер для получания всех продуктов маркета
+router.get('/marketitem', onlyAuth, views.api_marketitem_get_all)
 // Роутер для создания итема магазина
 router.post('/marketitem', [onlyAuth, onlyAdmin], views.api_marketitem_create)
+// Роутер для покупки товара по id
+router.post('/marketitem/:id', [onlyAuth], views.api_marketitem_buy)
+
 
 
 // роутер для создания пользователя
 router.post('/user', views.api_user_create)
 // роутер для получения пользователя по id
 router.get('/user/:id', onlyAuth, views.api_user_by_id)
+// роутер для редактирования пользователя
+router.put('/user/:id', [onlyAuth, onlyAdmin], views.api_user_update)
 // роутер для удаления пользователя по id
 router.delete('/user/:id', [onlyAuth, onlyAdmin], views.api_user_delete)
 // роутер для авторизации пользователя
-router.post('/user/login', onlyNoAuth, views.api_user_login)
+router.post('/user/login', views.api_user_login)
 // роутер для деавторизации 
 router.post('/user/logout', onlyAuth, views.api_user_logout)
 // роутер для обновления jwt и refrest token
 router.put('/user/refresh', onlyAuth, views.api_user_refresh)
 // роутер для получения всех пользователей
 router.get('/users', [onlyAuth, onlyAdmin], views.api_user_get_all)
+
 
 export default router;
 

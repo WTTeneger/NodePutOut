@@ -119,7 +119,7 @@ export class Form {
         let dict = {};
         for (let key in this) {
             if (this[key] instanceof CharField) {
-                console.log(key);
+
                 dict[key] = this[key].html;
                 // this[key].html = this[key].hc_html('input');
             }

@@ -4,19 +4,25 @@ import * as db from "./models_nosql.js"
 import mongoose from "mongoose";
 import * as form from "../modules/myform.js"
 
-// console.log(mongoose.model);
+
 
 db.Item.init()
 db.MarketItem.init()
 
-// console.log(jwt)
 
-function generate_header(_header) {
+
+function generate_header(req, _header) {
+    _header.site = _header.site ? _header.site : 'Site';
+    _header.page = _header.page ? _header.page : '';
+    req.user.balance = req.user.balance.toFixed(2);
     let data = {
-        'title': 'LT',
-        'page': 'Market',
+        user: req.user,
+        settings: {
+            token: 'TRTS'
+        }
     }
     var res = Object.assign({}, _header, data);
+
     return res;
 }
 async function app_index(req, res) {
@@ -29,10 +35,11 @@ async function app_index(req, res) {
                 }
             })
 
-    // console.log('items founds');
+
     // 
-    let res_data = generate_header({
+    let res_data = generate_header(req, {
         'product': items,
+        page: 'catalog',
     })
 
     res.render('catalog.html', res_data);
@@ -43,37 +50,53 @@ export async function app_item(req, res) {
     let id = req.params.id;
     let item = await db.Item.findById(id).populate({ path: 'owner' })
     let itemShop = await db.MarketItem.findOne({ item: item.id })
-    console.log(item);
-    console.log(itemShop);
-    let res_data = generate_header({
+
+
+    let res_data = generate_header(req, {
         'item': item,
         'shop': itemShop,
         'test': true,
+        page: item.name
+        // 'page': 'product'
     })
     res.render('product.html', res_data);
 }
 
 
 async function app_account(req, res) {
-    let res_data = generate_header({})
+    let items = await db.Item.find({ owner: req.user.id }).populate({ path: 'owner' })
+    let res_data = generate_header(req, {
+        page: 'account',
+        product: items,
 
-    res.render('catalog.html', res_data);
+    })
+
+    res.render('account.html', res_data);
 }
 
-async function app_auth(req, res) {
-    // let item = await db.Item.findById(id).populate({ path: 'owner' })
-    // console.log(item);
-    // console.log(itemShop);
-    const mf = new form.MyF({ url: 'amal/sda', method: 'POST', class: 'form' });
-    // console.log(mf.field())
-
-    let res_data = generate_header({
-        'form': mf,
-        'test': true,
+async function app_login(req, res) {
+    let res_data = generate_header(req, {
+        test: true,
+        page: "login"
     })
     res.render('auth.html', res_data);
 }
 
+// функция выхода из аккаунта
+async function app_logout(req, res) {
+    res;
+    try {
+        req.user.refresh_token = null;
+        await req.user.save()
+        res.clearCookie('JWT-Token')
+        res.clearCookie('RT-Token')
+        res.redirect('/app/')
+    } catch (error) {
+        res.redirect('/app/')
+    }
+    return res;
+}
 
-export { app_index, app_account, app_auth };
+
+export { app_index, app_account, app_login, app_logout };
 

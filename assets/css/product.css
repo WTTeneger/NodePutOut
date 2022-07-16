@@ -51,6 +51,13 @@
 [type] input {
   pointer-events: all;
 }
+.home__details-subtitle[type] {
+  margin: 15px;
+  box-shadow: 0px 0px 20px 2px;
+}
+.home__details-subtitle[type] h1 {
+    color: #1c1a17;
+}
 
 [type=COMMON] {
   font-family: "Oswald", sans-serif;
@@ -61,7 +68,7 @@
   width: max-content;
   border-radius: 10px;
   background: var(--color-common);
-  color: black;
+  color: var(--color-common);
 }
 
 [type=UNCOMMON] {
@@ -72,8 +79,8 @@
   font-style: bold;
   width: max-content;
   border-radius: 10px;
-  background: var(--color-common);
-  color: black;
+  background: var(--color-uncommon);
+  color: var(--color-uncommon);
 }
 
 [type=RARE] {
@@ -85,7 +92,7 @@
   width: max-content;
   border-radius: 10px;
   background: var(--color-rare);
-  color: black;
+  color: var(--color-rare);
 }
 
 [type=SRARE] {
@@ -97,7 +104,7 @@
   width: max-content;
   border-radius: 10px;
   background: var(--color-super-rare);
-  color: black;
+  color: var(--color-super-rare);
 }
 
 [type=EPIC] {
@@ -109,7 +116,7 @@
   width: max-content;
   border-radius: 10px;
   background: var(--color-epic);
-  color: black;
+  color: var(--color-epic);
 }
 
 [type=LEGENDARY] {
@@ -121,7 +128,7 @@
   width: max-content;
   border-radius: 10px;
   background: var(--color-legendary);
-  color: black;
+  color: var(--color-legendary);
 }
 
 .bg-gradient {
@@ -188,6 +195,7 @@ section {
   transition: 0.4s;
   box-shadow: 0px 9px 14px -2px;
   color: none;
+  pointer-events: all;
 }
 .price-block .price-line .buy-button:hover {
   background-color: #1c1a17;
@@ -241,4 +249,14 @@ section {
 .price-block .desc-line .owner:hover {
   cursor: pointer;
   transform: translateY(-0.05rem);
+}
+
+.t-v2 {
+  text-align: center;
+  color: #4a4948;
+}
+
+.avatar__img {
+  width: 15rem;
+  border-radius: 10px;
 }

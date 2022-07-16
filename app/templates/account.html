@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block header %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--=============== FAVICON ===============-->
+<link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
+
+<!--=============== BOXICONS ===============-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+<!--=============== SWIPER CSS ===============-->
+<link rel="stylesheet" href="/css/swiper-bundle.min.css">
+<!--=============== CSS ===============-->
+<link rel="stylesheet" href="/css/varibles.css">
+<link rel="stylesheet" href="/css/styles.css">
+<!-- <link rel="stylesheet" href="/css/catalog.css"> -->
+<link rel="stylesheet" href="/css/catalog.css">
+<!-- <link rel="stylesheet" href="/css/product.css"> -->
+
+<!--=============== JS WEB3 ===============-->
+<script type="module" src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+<!-- <script language="javascript" type="text/javascript" src="/js/web3.min.js"></script> -->
+<!-- <script language="javascript" type="text/javascript" src="/artifact/DAO.json"></script> -->
+{% endblock %}
+
+{% block content %}
+<main class="main">
+    <!--==================== DISCOUNT ====================-->
+    <section class="section discount">
+        <div class="discount__container container grid">
+            <div class="discount__data">
+                <h1>{{ user.name }}</h1>
+                <br>
+                <a href="/app/logout/" class="button">Exit</a>
+            </div>
+
+            <!-- <img src="/img/discount-img.png" alt="" class="discount__img"> -->
+            <img src="{{ user.image }}" alt="" class="discount__img avatar__img">
+        </div>
+    </section>
+
+    <!--==================== MY PRODUCT ====================-->
+    <section class="section catalog" id="catalog">
+        <h2 class="section__title">My Items</h2>
+        <div class="new__container container">
+            <div class="catalog_flex">
+                {% for el in product %}
+                <div to-url="/app/item/{{ el.id }}" type="{{el.rarity}}" class="new__content swiper-slide">
+                    <div class="tag_rare bg_shadow">
+                        <legend>{{el.rarity}}</legend>
+                    </div>
+                    <div class="new__tag">New</div>
+                    <img src="/img/{{el.image}}" alt="" class="new__img">
+                    <h3 class="new__title">{{el.name}}</h3>
+                    <span class="new__subtitle">{{el.type}}</span>
+
+                    <a to-url="/app/user/{{ el.owner.id }}" class="button button_owner bg">
+                        <img src="{{el.owner.image}}">
+                    </a>
+
+                    <button class="button new__button bg">
+                        <i class='bx bx-store new__icon'></i>
+
+                    </button>
+                    {% if el.price %}
+                    <div class="new__prices">
+                        <span class="new__price">${{el.price}}</span>
+                        {% if el.total_price %}
+                        <span class="new__discount">${{el.total_price}}</span>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% else %}
+                <h1 class="t-v2">empty</h1>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+
+</main>
+{% endblock %}
+
+</body>
+
+</html>

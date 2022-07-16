@@ -8,15 +8,15 @@ const db = mongoose.models;
 const onlyAuth = async (req, res, next) => {
     try {
         let token_jwt = req.cookies['JWT-Token'];
-        console.log(token_jwt);
+
         if (token_jwt) {
             let token = jwt.verify(token_jwt, settings.JWT_SECRET);
-            console.log(token);
+
             if (token.rights === 'admin' || token.rights === 'user') {
                 console.log(`Доступ уровня - ${token.rights}`);
-                let user = await db.Client.findOne({ id: token.id });
+                let user = await db.Client.findById(token.id);
                 req.user = user;
-                console.log(`Пользователь ${user.name} авторизован`);
+                console.log(`Пользователь ${req.user.name} авторизован`);
                 next();
             } else {
                 res.status(403).json({

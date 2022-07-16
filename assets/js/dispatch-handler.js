@@ -5,7 +5,7 @@ function sender(form, e) {
     let _t = 0
     // перебераем все инпуты у которых type inpкоторые есть в форме
     form.find('input').each(function (index, element) {
-        console.log(element);
+
         if ($(element).attr('type') != 'submit' && $(element).attr('type') != 'button') {
 
             data[$(element).attr('name')] = $(element).val();
@@ -28,14 +28,22 @@ function sender(form, e) {
         },
         data: JSON.stringify(data),
         success: function (data) {
-            console.log(data);
+
             if (data.code == 0001) {
                 localStorage['refreshToken'] = data.data.refreshToken;
             }
             if (data.code == 0002) {
                 localStorage['refreshToken'] = data.data.refreshToken;
                 // redicrect to login
-                window.location.href = '/app';
+                let _url = data.url ? data.url : '/app';
+                window.location.href = _url;
+            }
+            if (data.code == 0003) {
+                let _url = data.url ? data.url : '/app';
+                window.location.href = _url;
+            }
+            if (data.code == 0004) {
+                window.location.href = window.location.href;
             }
             if (data.status == 'success') {
                 window.location.href = data.url;
@@ -43,12 +51,11 @@ function sender(form, e) {
                 alert(data.message);
             }
         }
-
         // если пришел плохой ответ
         , error: function (data) {
             let _data = data.responseJSON
-            console.log(_data);
-            // alert(_data.message)
+
+            alert(_data.message)
         }
 
     });

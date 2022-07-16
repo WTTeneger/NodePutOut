@@ -21,7 +21,6 @@ const PORT = 8000;
 // const DB_URL = 'mongodb+srv://root:pass@nodejsdb.ngo1hlm.mongodb.net/?retryWrites=true&w=majority';
 
 const app = express()
-console.log(__dirname)
 app.use(express.static(__dirname + '/assets'));
 app.engine('html', ejq.renderFile);
 app.use(express.json())
