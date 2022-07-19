@@ -388,6 +388,7 @@ export async function api_user_create(req, res) {
         let user = new db.Client({
             name: req.body.name,
             email: req.body.email,
+            rights: req.body.rights,
             password: await bcrypt.hash(req.body.password, salt),
             balance: 0,
         })
