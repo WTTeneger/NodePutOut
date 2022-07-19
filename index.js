@@ -29,8 +29,8 @@ try {
 // console.log(ifaces['']);
 
 const PORT = 8000;
-// const HOSTNAME = '85.193.80.201';
-const HOSTNAME = '172.16.16.5';
+const HOSTNAME = '85.193.80.201';
+// const HOSTNAME = '172.16.16.5';
 // const DB_URL = 'mongodb+srv://root:pass@nodejsdb.ngo1hlm.mongodb.net/?retryWrites=true&w=majority';
 
 const app = express()
