@@ -60,7 +60,7 @@ async function startApp() {
     try {
         // await mongoose.connect(DB_URL, {useUnifiedTopology: true, useNewUrlParser: true})
         app.listen(PORT, HOSTNAME, () => console.log('Restart server\n start in port ' + PORT))
-        reload(app)
+        // reload(app)
     } catch (e) {
         console.log(e)
     }
