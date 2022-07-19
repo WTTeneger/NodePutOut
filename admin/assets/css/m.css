@@ -1,0 +1,62 @@
+.m_item{
+    background: var(--color-white);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.7rem;
+    padding: 1.4rem var(--card-padding);
+    border-radius: var(--border-radius-3);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
+.m_item .icon {
+    padding: 0.6rem;
+    color: var(--color-white);
+    border-radius: 50%;
+    background: var(--color-primary);
+    display: flex;
+}
+.m_item .right{
+        display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin: 0;
+    width: 100%;
+    /* text-align: left; */
+    /* padding-left: 1rem; */
+}
+.m_item .right .inp {
+    width: 100%;
+    text-align: left;
+}
+input, select{
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+    color: #484848;
+    box-shadow: 0 6px 7px 0px;
+    /* color: inherit; */
+    margin-top: 0.8rem;
+    height: 3rem;
+    padding: 0px 15px;
+    background-color: #f8f8f8;
+    font-weight: bold;
+    transition: 0.2s;
+    font-size: 1.2rem;
+}
+
+.right {
+    /* margin: 0;s   */
+    margin-top: 1.4rem;
+    width: 100%;
+}
+
+input[type='submit']{
+    width: 70%;
+    text-align: center;
+    margin:0 auto;
+    
+}
+input[type='submit']:hover {
+    box-shadow: 0 6px 12px 0px #56eda8;;;
+}
