@@ -28,7 +28,7 @@ try {
 }
 
 const PORT = 8000;
-const HOSTNAME = '85.193.80.201';
+// const HOSTNAME = '127.0.0xs.1';
 // const DB_URL = 'mongodb+srv://root:pass@nodejsdb.ngo1hlm.mongodb.net/?retryWrites=true&w=majority';
 
 const app = express()
@@ -57,7 +57,7 @@ let db = mongoose.connect('mongodb://127.0.0.1:27017/test-db');
 async function startApp() {
     try {
         // await mongoose.connect(DB_URL, {useUnifiedTopology: true, useNewUrlParser: true})
-        app.listen(PORT, HOSTNAME, () => console.log('Restart server\n start here http://' + HOSTNAME + ':' + PORT))
+        app.listen(PORT, () => console.log('Restart server\n start in port ' + PORT))
         reload(app)
     } catch (e) {
         console.log(e)
