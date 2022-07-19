@@ -26,6 +26,7 @@ try {
 } catch (e) {
     var local_addr = 'localhost';
 }
+console.log(ifaces);
 
 const PORT = 8000;
 const HOSTNAME = '85.193.80.201';
