@@ -20,7 +20,12 @@ import logger from './middleware/logger.js'
 import { _404_page } from "./views.js";
 import os from 'os';
 var ifaces = os.networkInterfaces();
-var local_addr = (ifaces.en0[1].address);
+try {
+
+    var local_addr = (ifaces.en0[1].address);
+} catch (e) {
+    var local_addr = 'localhost';
+}
 
 const PORT = 8000;
 // const DB_URL = 'mongodb+srv://root:pass@nodejsdb.ngo1hlm.mongodb.net/?retryWrites=true&w=majority';
