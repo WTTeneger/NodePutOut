@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Скрытие поиска если создать на рабочий стол iphone -->
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
+    <!--  -->
+    <meta name="description" content="MarketPlace for PutOut">
+    <meta name="author" content="WT_tini">
+    <!-- мета тег icon -->
+    <link rel="icon" href="/favicon.png">
+
+    <!--=============== BOXICONS ===============-->
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="/css/404.css">
+
+    <title>XCOMPANY</title>
+</head>
+
+<body>
+    <script src="/js/jquery.min.js"></script>
+    <script>
+        $('body').delay('1000').animate({ scrollTop: '0px' }, 'slow');
+    </script>
+    <!--==================== HEADER ====================-->
+    <header class="header">
+        <nav class="nav container">
+            <a href="#" class="nav__logo">
+                XCOMPANY
+            </a>
+
+
+            <!-- Toggle button -->
+            <div class="nav__toggle" id="nav-toggle">
+                <i class='bx bx-grid-alt'></i>
+            </div>
+        </nav>
+    </header>
+
+    <!--==================== MAIN ====================-->
+    <main class="main">
+        <!--==================== HOME ====================-->
+        <section class="home">
+            <div class="home__container container">
+                <div class="home__data">
+                    <span class="home__subtitle">Error 404</span>
+                    <h1 class="home__title">Hey Buddy</h1>
+                    <p class="home__description">
+                        We can't seem to find the page <br> you are looking for.
+                    </p>
+                    <a href="/app" class="home__button">
+                        Go Home
+                    </a>
+                </div>
+
+                <div class="home__img">
+                    <img src="/img/ghost-img.png" alt="">
+                    <div class="home__shadow"></div>
+                </div>
+            </div>
+
+            <footer class="home__footer">
+                <span>(554) 987-654</span>
+                <span>|</span>
+                <span>info@company.com</span>
+            </footer>
+        </section>
+    </main>
+
+    <!--=============== SCROLLREVEAL ===============-->
+    <script src="/js/scrollreveal.min.js"></script>
+
+    <!--=============== MAIN JS ===============-->
+    <script src="/js/404.js"></script>
+</body>
+
+</html>

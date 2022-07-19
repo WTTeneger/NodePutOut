@@ -1,6 +1,6 @@
 
 
-async function main_page(req, res) {
-    res.render('index1.html');
+async function _404_page(req, res) {
+    res.render('404.html');
 }
-export {main_page};
+export { _404_page };

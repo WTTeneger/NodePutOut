@@ -26,10 +26,12 @@ const onlyAuth = async (req, res, next) => {
             }
 
         } else {
-            res.status(401).json({
-                message: 'Нет доступа',
-                err: ['you are not authorized']
-            })
+            res.redirect('/app/login/');
+            return res;
+            // res.status(401).json({
+            //     message: 'Нет доступа',
+            //     err: ['you are not authorized']
+            // })
         }
     } catch (e) {
         res.status(401).json({

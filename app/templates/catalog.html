@@ -1,13 +1,8 @@
 {% extends "base.html" %}
 
 {% block header %}
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--=============== FAVICON ===============-->
 <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
-
-<!--=============== BOXICONS ===============-->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 <!--=============== SWIPER CSS ===============-->
 <link rel="stylesheet" href="/css/swiper-bundle.min.css">
 <!--=============== CSS ===============-->
@@ -141,14 +136,15 @@
         <div class="new__container container">
             <div class="catalog_flex">
                 {% for el in product %}
-                <div to-url="/app/item/{{ el.item.id }}" type="{{el.item.rarity}}" class="new__content swiper-slide">
+                <div to-url="/app/item/{{ el.item.id }}" type="{{el.item.rarity.name}}"
+                    class="new__content swiper-slide">
                     <div class="tag_rare bg_shadow">
-                        <legend>{{el.item.rarity}}</legend>
+                        <legend>{{el.item.rarity.name | upper }}</legend>
                     </div>
                     <div class="new__tag">New</div>
                     <img src="/img/{{el.item.image}}" alt="" class="new__img">
                     <h3 class="new__title">{{el.item.name}}</h3>
-                    <span class="new__subtitle">{{el.item.type}}</span>
+                    <span class="new__subtitle">{{el.item.type.name}}</span>
 
                     <a to-url="/app/user/{{ el.item.owner.id }}" class="button button_owner bg">
                         <img src="{{el.item.owner.image}}">
@@ -181,22 +177,6 @@
         <div class="new__container container">
             <div class="swiper new-swiper">
                 <div class="swiper-wrapper">
-                    <div class="new__content swiper-slide">
-                        <div class="new__tag">New</div>
-                        <img src="/img/new1-img.png" alt="" class="new__img">
-                        <h3 class="new__title">Haunted House</h3>
-                        <span class="new__subtitle">Accessory</span>
-
-                        <div class="new__prices">
-                            <span class="new__price">$14.99</span>
-                            <span class="new__discount">$29.99</span>
-                        </div>
-
-                        <button class="button new__button">
-                            <i class='bx bx-cart-alt new__icon'></i>
-                        </button>
-                    </div>
-
                     <div class="new__content swiper-slide">
                         <div class="new__tag">New</div>
                         <img src="/img/new2-img.png" alt="" class="new__img">
@@ -298,6 +278,18 @@
         </div>
     </section>
 </main>
+
+
+<script type="text/javascript" src="/js/vanilla-tilt.js"></script>
+<script type="text/javascript">
+    VanillaTilt.init(document.querySelectorAll(".new__content"), {
+        max: 3,
+        speed: 20,
+        glare: true,
+        "max-glare": 0.05,
+        "glare-prerender": false,
+    });
+</script>
 {% endblock %}
 
 </body>

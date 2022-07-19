@@ -2,6 +2,41 @@ import mongoose from "mongoose";
 
 mongoose.connect('mongodb://127.0.0.1:27017/test-db');
 
+
+export const Rarity = mongoose.model('Rarity', {
+    name: {
+        type: String,
+        required: true,
+        minlength: 1,
+        trim: true,
+    },
+    image: {
+        type: String,
+        required: false,
+    }
+});
+
+
+export const Type = mongoose.model('Type', {
+    name: {
+        type: String,
+        required: true,
+        minlength: 1,
+        trim: true,
+    },
+    image: {
+        type: String,
+        required: false,
+        minlength: 1,
+    },
+    banner: {
+        type: String,
+        required: false,
+        minlength: 1,
+        trim: true,
+    }
+});
+
 export const Item = mongoose.model('Item', {
     name: {
         type: String,
@@ -28,16 +63,16 @@ export const Item = mongoose.model('Item', {
         trim: true,
     },
     rarity: {
-        type: String,
-        required: true,
-        minlength: 1,
-        trim: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Rarity',
+        default: Rarity.findOne({ name: 'common' }),
+        required: false,
     },
     type: {
-        type: String,
-        required: true,
-        minlength: 1,
-        trim: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Type',
+        default: Type.findOne({ name: 'head' }),
+        required: false,
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,

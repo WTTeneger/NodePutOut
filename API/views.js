@@ -8,7 +8,7 @@ import bcrypt from "bcrypt";
 import * as settings from "../settings.js";
 import logger from '../middleware/logger.js';
 var db = mongoose.models
-
+import generate_header from "../middleware/generate_header.js";
 
 
 
@@ -63,22 +63,42 @@ export async function api_product_create(req, res) {
 // функция обновления продукта по id (только для админа) 
 export async function api_product_update(req, res) {
     try {
-        let item = await db.Item.findByIdAndUpdate(req.params.id, {
-            name: req.body.name,
-            description: req.body.description,
-            image: req.body.image,
-            category: req.body.category,
-            rarity: req.body.rarity,
-            type: req.body.type,
-            owner: req.body.owner,
-        })
-
-        res.status(201).json({
-            message: 'Итем обновлен',
-            data: await item,
-        })
+        let item = await db.Item.findById(req.params.id)
+        console.log(req.body);
+        if (item) {
+            if (req.body.name) {
+                item.name = req.body.name
+            }
+            if (req.body.description) {
+                item.description = req.body.description
+            }
+            if (req.body.image) {
+                item.image = req.body.image
+            }
+            if (req.body.category) {
+                item.category = req.body.category
+            }
+            if (req.body.rarity) {
+                let rt_id = await db.Rarity.findOne({ name: req.body.rarity })
+                item.rarity = rt_id
+            }
+            if (req.body.type) {
+                let tp_id = await db.Type.findOne({ name: req.body.type })
+                item.type = tp_id
+            }
+            console.log(item);
+            await item.save()
+            res.status(200).json({
+                message: 'Итем обновлен',
+                data: item,
+            })
+        } else {
+            res.status(404).json({
+                message: 'Итем не найден',
+            })
+        }
     } catch (error) {
-
+        // console.log(error);
         res.status(400).json({
             message: 'Ошибка обновления',
             err: error
@@ -272,8 +292,94 @@ export async function api_marketitem_buy(req, res) {
     }
 }
 
+export async function api_type_create(req, res) {
+    try {
+        let type = new db.Type({
+            name: req.body.name,
+            image: req.body.image ? req.body.image : null,
+        })
+        await type.save()
+        res.status(200).json({
+            message: 'Тип создан',
+            data: type,
+        })
+    }
+    catch (error) {
 
+        res.status(400).json({
+            message: 'Ошибка создания',
+            err: error
+        })
+    }
+}
 
+export async function api_type_delete(req, res) {
+    try {
+        let type = await db.Type.findByIdAndDelete(req.params.id)
+        res.status(200).json({
+            message: 'Тип удален',
+            data: type,
+        })
+    }
+    catch (error) {
+
+        res.status(400).json({
+            message: 'Ошибка удаления',
+            err: error
+        })
+    }
+}
+
+export async function api_type_get_all(req, res) {
+    let res_data = {
+        'type': await db.Type.find({})
+    }
+    res.status(200).json(res_data)
+}
+
+export async function api_rarity_create(req, res) {
+    try {
+        let rarity = new db.Rarity({
+            name: req.body.name,
+            image: req.body.image ? req.body.image : null,
+        })
+        await rarity.save()
+        res.status(200).json({
+            message: 'Редкость создана',
+            data: rarity,
+        })
+    }
+    catch (error) {
+
+        res.status(400).json({
+            message: 'Ошибка создания',
+            err: error
+        })
+    }
+
+}
+
+export async function api_rarity_delete(req, res) {
+    try {
+        let rarity = await db.Rarity.findByIdAndDelete(req.params.id)
+        res.status(200).json({
+            message: 'Редкость удалена',
+            data: rarity,
+        })
+    } catch (error) {
+        res.status(400).json({
+            message: 'Ошибка удаления',
+            err: error
+        })
+    }
+}
+
+export async function api_rarity_get_all(req, res) {
+    let res_data = {
+        'rarity': await db.Rarity.find({})
+    }
+    res.status(200).json(res_data)
+}
 
 // функция создания пользователя
 export async function api_user_create(req, res) {
@@ -347,6 +453,9 @@ export async function api_user_update(req, res) {
         }
         if (req.body.balance) {
             user.balance = req.body.balance;
+        }
+        if (req.body.image) {
+            user.image = req.body.image;
         }
         await user.save()
         res.status(200).json({

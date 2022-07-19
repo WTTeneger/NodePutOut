@@ -5,9 +5,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Скрытие поиска если создать на рабочий стол iphone -->
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
+    <!--  -->
     <meta name="description" content="MarketPlace for PutOut">
     <meta name="author" content="WT_tini">
     <link rel="icon" href="../../favicon.ico">
+    <!--=============== BOXICONS ===============-->
+    <link rel="stylesheet" href="/boxicons-2.1.2/css/boxicons.css">
     <title>{{site}} - {{page}}</title>
     <link href="/css/base.css" rel="stylesheet">
     {% block header %}{% endblock %}
@@ -23,13 +30,13 @@
         <nav class="nav container">
             <a href="#" class="nav__logo">
                 <img src="/img/logo.png" alt="" class="nav__logo-img">
-                PutOut
+                XCOMPANY
             </a>
 
             <div class="nav__menu" id="nav-menu">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a href="#home" class="nav__link {% if page == 'home' %} active-link {%endif%}">Home</a>
+                        <a href="/" class="nav__link {% if page == 'home' %} active-link {%endif%}">Home</a>
                     </li>
                     <li class="nav__item">
                         <a href="#about" class="nav__link {% if page == 'about' %} active-link {%endif%}">About</a>
@@ -81,7 +88,7 @@
     <footer class="footer section">
         <div class="footer__container container grid">
             <div class="footer__content">
-                <a href="#" class="footer__logo">
+                <a href="/a" class="footer__logo">
                     <img src="/img/logo.png" alt="" class="footer__logo-img">
                     Halloween
                 </a>

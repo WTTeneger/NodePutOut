@@ -58,7 +58,19 @@ router.post('/marketitem', [onlyAuth, onlyAdmin], views.api_marketitem_create)
 // Роутер для покупки товара по id
 router.post('/marketitem/:id', [onlyAuth], views.api_marketitem_buy)
 
+// Роутер для создания типа предмета
+router.post('/type', [onlyAuth, onlyAdmin], views.api_type_create)
+// Роутер для удаления типа предмета
+router.delete('/type/:id', [onlyAuth, onlyAdmin], views.api_type_delete)
+// Роутер для получания всех типов предметов
+router.get('/type', onlyAuth, views.api_type_get_all)
 
+// Роутер для создания rarity предмета
+router.post('/rarity', [onlyAuth, onlyAdmin], views.api_rarity_create)
+// Роутер для удаления rarity предмета
+router.delete('/rarity/:id', [onlyAuth, onlyAdmin], views.api_rarity_delete)
+// Роутер для получания всех rarity предметов
+router.get('/rarity', onlyAuth, views.api_rarity_get_all)
 
 // роутер для создания пользователя
 router.post('/user', views.api_user_create)

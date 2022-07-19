@@ -3,36 +3,22 @@
 import * as db from "./models_nosql.js"
 import mongoose from "mongoose";
 import * as form from "../modules/myform.js"
-
+import generate_header from "../middleware/generate_header.js";
 
 
 db.Item.init()
 db.MarketItem.init()
 
 
-
-function generate_header(req, _header) {
-    _header.site = _header.site ? _header.site : 'Site';
-    _header.page = _header.page ? _header.page : '';
-    req.user.balance = req.user.balance.toFixed(2);
-    let data = {
-        user: req.user,
-        settings: {
-            token: 'TRTS'
-        }
-    }
-    var res = Object.assign({}, _header, data);
-
-    return res;
-}
 async function app_index(req, res) {
     let items = await db.MarketItem.find({})
         .populate(
             {
                 path: 'item',
-                populate: {
-                    path: "owner" // in blogs, populate comments
-                }
+                populate: ['owner', 'rarity', 'type']
+                // path: ["owner", 'rarity'], // in blogs, populate comments
+                // path: 'rarity',
+                // }
             })
 
 
@@ -48,7 +34,7 @@ async function app_index(req, res) {
 // Функция получения продукта по id
 export async function app_item(req, res) {
     let id = req.params.id;
-    let item = await db.Item.findById(id).populate({ path: 'owner' })
+    let item = await db.Item.findById(id).populate(['owner', 'rarity', 'type'])
     let itemShop = await db.MarketItem.findOne({ item: item.id })
 
 

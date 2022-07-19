@@ -242,3 +242,19 @@
         width: 40%;
     }
 }
+
+
+.bg_paralaps  {
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transform: perspective(500px);
+    transform: perspective(500px);
+    overflow: inherit;
+}
+.bg_paralaps .pr {
+    -webkit-transform: translateZ(50px) scale(0.7);
+    transform: translateZ(50px) scale(0.7); 
+}
+.new__container .js-tilt-glare-inner{
+    background-image: linear-gradient(0deg, (var(--color-epic) 0%, rgb(255, 255, 255) 100%));
+}

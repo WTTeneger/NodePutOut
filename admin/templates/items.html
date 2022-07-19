@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block header %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
+<link rel="stylesheet" href="./css/color.css" />
+{% endblock %}
+{% block content %}
+<!------------------ END OF ASIDE ------------------>
+<main>
+  <h1>Items</h1>
+
+  <div class="date">
+    <input type="date" />
+  </div>
+
+  <div class="insights">
+    <div class="sales">
+      <span class="material-icons-sharp">analytics</span>
+      <div class="middle">
+        <div class="left">
+          <h3>Total Sales</h3>
+          <h1>$25,024</h1>
+        </div>
+        <div class="progress">
+          <svg>
+            <circle cx="38" cy="38" r="36"></circle>
+          </svg>
+          <div class="number">
+            <p>20%</p>
+          </div>
+        </div>
+      </div>
+      <small class="text-muted">Last 24 Hours</small>
+    </div>
+    <!------------ END OF SALES -------------->
+    <div class="expenses">
+      <span class="material-icons-sharp">bar_chart</span>
+      <div class="middle">
+        <div class="left">
+          <h3>Total Expenses</h3>
+          <h1>$14,160</h1>
+        </div>
+        <div class="progress">
+          <svg>
+            <circle cx="38" cy="38" r="36"></circle>
+          </svg>
+          <div class="number">
+            <p>62%</p>
+          </div>
+        </div>
+      </div>
+      <small class="text-muted">Last 24 Hours</small>
+    </div>
+    <!------------ END OF EXPENSES -------------->
+    <div class="income">
+      <span class="material-icons-sharp">stacked_line_chart</span>
+      <div class="middle">
+        <div class="left">
+          <h3>Total Income</h3>
+          <h1>$10,864</h1>
+        </div>
+        <div class="progress">
+          <svg>
+            <circle cx="38" cy="38" r="36"></circle>
+          </svg>
+          <div class="number">
+            <p>44%</p>
+          </div>
+        </div>
+      </div>
+      <small class="text-muted">Last 24 Hours</small>
+    </div>
+    <!------------ END OF INCOME -------------->
+  </div>
+  <!------------ END OF INSIGHTS -------------->
+
+  <div class="recent-orders">
+    <h2>All Items</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Item type</th>
+          <th>Item rarity</th>
+          <th>owner</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for el in items%}
+        <tr>
+          <td>{{el.name}}</td>
+          <td>{{el.type.name}}</td>
+          <td style="color:var(--color-{{el.rarity.name | lower }})">{{el.rarity.name}}</td>
+          <td>{{el.owner.name}}</td>
+          <td class="primary"><a href="/admin/item?id={{el.id}}">Details</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <a href="#">Show All</a>
+  </div>
+</main>
+<!----------------- END OF MAIN -------------------->
+
+{% endblock %}
