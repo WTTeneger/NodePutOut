@@ -19,6 +19,7 @@ const __dirname = dirname(__filename);
 import logger from './middleware/logger.js'
 import { _404_page } from "./views.js";
 import os from 'os';
+import bodyParser from 'body-parser';
 var ifaces = os.networkInterfaces();
 try {
 
@@ -28,7 +29,8 @@ try {
 }
 // console.log(ifaces['']);
 
-const PORT = 80;
+// const PORT = 80;
+const PORT = 8000;
 const HOSTNAME = '0.0.0.0';
 // const HOSTNAME = '172.16.16.5';
 // const DB_URL = 'mongodb+srv://root:pass@nodejsdb.ngo1hlm.mongodb.net/?retryWrites=true&w=majority';
@@ -36,7 +38,18 @@ const HOSTNAME = '0.0.0.0';
 const app = express()
 app.use(express.static(__dirname + '/assets'));
 app.engine('html', ejq.renderFile);
-app.use(express.json())
+app.use(express.json());
+
+app.use(bodyParser.json({
+    limit: '50mb'
+}));
+
+app.use(bodyParser.urlencoded({
+    limit: '50mb',
+    parameterLimit: 100000,
+    extended: true
+}));
+
 app.set('view engine', 'ejs');
 
 app.set('views', __dirname + '/templates');

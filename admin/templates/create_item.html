@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block header %}
+<!--=============== CSS ===============-->
+<link rel="stylesheet" href="./css/404.css">
+<link rel="stylesheet" href="./css/m.css">
+<link rel="stylesheet" href="./css/color.css">
+{% endblock %}
+
+{% block content %}
+<!------------------ END OF ASIDE ------------------>
+<main>
+  <h1>ITEM ({{ item.name }})</h1>
+  <!--==================== HOME ====================-->
+  <form action="/api/product" method="POST" action="upload/post" enctype="multipart/form-data" s>
+
+    <section class="home">
+      <div class="home__container container">
+        <div class="home__img">
+          <!-- <img src="/img/ghost-img.png" alt=""> -->
+          <img id='imgs' src="/img/{{ item.image }}" alt="">
+          <div class="home__shadow"></div>
+        </div>
+        <div class="home__data">
+
+          <div class="m_item online">
+            <div class="right">
+              <div class="inp">
+                <h3>image</h3>
+                <input accept="image/*" type="file" name="image" oninput="set_photo(this)"
+                  placeholder="input item image">
+                <!-- <input type="text" name="type" placeholder="input item type" value="{{ item.type.name }}"> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="m_item online">
+            <div class="right">
+              <div class="inp">
+                <h3>Name</h3>
+                <input type="text" name="name" placeholder="input item name" value="{{ item.name }}">
+              </div>
+            </div>
+          </div>
+
+          <div class="m_item online">
+            <div class="right">
+              <div class="inp">
+                <h3>rarity</h3>
+                <select style="color:var(--color-{{ item.rarity.name | lower}})"
+                  onchange="this.style = `color:var(--color-${this.value})`" name="rarity" class="form-control"
+                  placeholder="input item rarity" value="{{ item.rarity.name }}">
+                  <option value="1">2</option>
+                  {% for el in rarity %}
+                  <option {% if el.name==item.rarity.name %} selected {% endif %} value="{{ el.name }}">{{ el.name }}
+                  </option>
+                  {% endfor %}
+                </select>
+                <!-- <input type="text" name="type" placeholder="input item type" value="{{ item.type.name }}"> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="m_item online">
+            <div class="right">
+              <div class="inp">
+                <h3>type</h3>
+                <select name="type" class="form-control" placeholder="input item type" value="{{ item.type.name }}">
+                  {% for el in type%}
+                  <option {% if el.name==item.type.name %} selected {% endif %} value="{{ el.name }}">{{ el.name }}
+                  </option>
+                  {% endfor %}
+                </select>
+                <!-- <input type="text" name="type" placeholder="input item type" value="{{ item.type.name }}"> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="m_item online">
+            <div class="right">
+              <div class="inp">
+                <h3>description</h3>
+                <input type="text" name="description" placeholder="input item description">
+                <!-- <input type="text" name="type" placeholder="input item type" value="{{ item.type.name }}"> -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <div style="text-align: center;">
+      <input type="submit" value="Создать">
+    </div>
+  </form>
+</main>
+<!----------------- END OF MAIN -------------------->
+
+{% endblock %}

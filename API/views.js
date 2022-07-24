@@ -6,14 +6,20 @@ import jwt from 'jsonwebtoken'
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import * as settings from "../settings.js";
+import fs from "fs";
 import logger from '../middleware/logger.js';
 var db = mongoose.models
 import generate_header from "../middleware/generate_header.js";
-
-
-
+import Resize from "../js/resize.js";
+import path from 'path';
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+import { v4 as uuidv4 } from 'uuid';
 
 export async function api_index(req, res) {
+
 
     // let res_data = generate_header({
     //     'product': await db.Product.find({}),
@@ -26,22 +32,38 @@ export async function api_index(req, res) {
 
 // функция создания продукта (только для админа)
 export async function api_product_create(req, res) {
+    console.log(req.body);
+    console.log(req.file);
+    var base64Data = req.body.image.replace(/^data:image\/png;base64,/, "");
+    var otherData = req.body.image.split(',')[0];
+    var imgType = otherData.split(';')[0].split('/')[1];
+    var imgName = `${uuidv4()}.${imgType}`
+
+
     try {
-        let owner = req.body.owner ? req.body.owner : null;
+        let owner = req.body.owner ? req.body.owner : '62cbc34442c14ddb2dcfb735';
+        const imagePath = path.join(__dirname, '..', 'assets', 'img');
+        let img_f = path.join(imagePath, `${imgName}`);
+        fs.writeFile(img_f, base64Data, 'base64', function (err) {
+            console.log('err', err);
+        });
+
         let item = new db.Item({
             name: req.body.name,
             description: req.body.description,
-            image: req.body.image,
-            category: req.body.category,
-            rarity: req.body.rarity,
-            type: req.body.type,
+            image: imgName,
+            category: 'base',
+            rarity: await db.Rarity.findOne({ name: req.body.rarity }),
+            type: await db.Type.findOne({ name: req.body.type }),
         })
         item.owner = owner
+        console.log(item);
         let d = db.Item.find({ name: req.body.name }).exec(console.log('err'));
         if (d.length > 0) {
             res.status(400).json({
                 message: 'Предмет с таким названием уже есть (Измените название)',
                 field: 'name',
+                code: 2004
             })
             return res;
         } else {
@@ -53,7 +75,7 @@ export async function api_product_create(req, res) {
             })
         }
     } catch (error) {
-
+        console.log(error);
         res.status(404).json({
             message: 'Не все поля заполнены'
         })
@@ -612,4 +634,45 @@ export async function api_user_get_all(req, res) {
             err: error.message.split(', ')
         })
     }
+}
+
+
+// Функция сохранения статистики
+export async function api_game_finishgame(req, res) {
+    console.log('ss');
+    console.log(req.body);
+    var usr_stats = await db.Stats.findOne({ client: req.user })
+    if (!usr_stats) {
+        usr_stats = new db.Stats({ client: req.user })
+    }
+    usr_stats.total_games += 1
+    if (req.body.count_money) {
+        req.user.balance += req.body.count_money
+        req.user.save()
+    }
+    // if ('stats' in req.body) {
+    // console.log(req.body.stats);
+    // for (var el in req.body.stats) {
+    //     console.log(el)
+    //     if (el == 'died_from') {
+    //         if (req.body.stats.died_from == 'hole') {
+    //             usr_stats.died_from_hole += 1
+    //         }
+    //     }
+    //     if (el == 'total_kilometers') {
+
+    //     }
+    // }
+    // }
+    usr_stats.died_from_hole += 1 ? req.body.stats.died_from_hole : 0
+    usr_stats.total_killometers += req.body.stats.total_kilometers || 0;
+    console.log(usr_stats);
+    usr_stats.save()
+    res.status(200).json({
+        message: 'Статистика сохранена',
+        data: usr_stats,
+    })
+
+
+
 }

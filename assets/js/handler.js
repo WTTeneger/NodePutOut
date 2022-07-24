@@ -12,6 +12,7 @@ $(document).click(function (e) {
     }
     if ($(e.target).attr('type') == 'submit') {
         sender($(e.target).closest('form'), e);
+
     }
 
     // если у таркета есть стиль button-box

@@ -161,3 +161,34 @@ export const Client = mongoose.model('Client', {
     }
 });
 
+
+export const Stats = mongoose.model('Stats', {
+    client: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Client',
+        required: true,
+        minlength: 1,
+        trim: true,
+    },
+    total_killometers: {
+        type: Number,
+        required: true,
+        minlength: 1,
+        trim: true,
+        default: 0,
+    },
+    total_games: {
+        type: Number,
+        required: true,
+        minlength: 1,
+        trim: true,
+        default: 0,
+    },
+    died_from_hole: {
+        type: Number,
+        required: true,
+        minlength: 1,
+        trim: true,
+        default: 0,
+    }
+});

@@ -60,6 +60,16 @@ export async function admin_item(req, res) {
     res.render('item.html', res_data);
 }
 
+export async function admin_create_item(req, res) {
+    let type = await db.Type.find({})
+    let rarity = await db.Rarity.find({})
+    let res_data = generate_header(req, {
+        type: type,
+        rarity: rarity,
+        page: 'create_item',
+    })
+    res.render('create_item.html', res_data);
+}
 
 export async function _404_admin_page(req, res) {
     let res_data = generate_header(req, {

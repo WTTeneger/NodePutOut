@@ -45,6 +45,7 @@ router.get(['/base'], [onlyAuth, onlyAdmin], views.admin_base)
 router.get(['/', '/dashboard'], [onlyAuth, onlyAdmin], views.admin_index)
 router.get(['/items'], [onlyAuth, onlyAdmin], views.admin_products)
 router.get(['/item'], [onlyAuth, onlyAdmin], views.admin_item)
+router.get(['/create-item'], [onlyAuth, onlyAdmin], views.admin_create_item)
 
 router.get('*', function (req, res) {
     views._404_admin_page(req, res)

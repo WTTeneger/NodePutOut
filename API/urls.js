@@ -11,10 +11,48 @@ import * as settings from "../settings.js";
 import cookieParser from "cookie-parser";
 import logger from '../middleware/logger.js';
 import onlyAdmin from '../middleware/onlyAdmin.js';
-import onlyAuth from '../middleware/onlyAuth.js';
+// import onlyAuth from '../middleware/onlyAuth.js';
 import onlyNoAuth from '../middleware/onlyNoAuth.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+var db = mongoose.models;
+
+const onlyAuth = async (req, res, next) => {
+    try {
+        let token_jwt = req.cookies['JWT-Token'];
+
+        if (token_jwt) {
+            let token = jwt.verify(token_jwt, settings.JWT_SECRET);
+
+            if (token.rights === 'admin' || token.rights === 'user') {
+                console.log(`Доступ уровня - ${token.rights}`);
+                let user = await db.Client.findById(token.id);
+                req.user = user;
+                console.log(`Пользователь ${req.user.name} авторизован`);
+                next();
+            } else {
+                res.status(403).json({
+                    message: 'Недостаточно прав',
+                    err: ['you dont have rights']
+                })
+            }
+
+        } else {
+            res.status(401).json({
+                message: 'Нет авторизован',
+            })
+        }
+    } catch (e) {
+        res.status(401).json({
+            message: 'Нет доступа',
+            err: e.message.split(', ')
+        })
+    }
+}
+
+
 
 const router = new Router();
 
@@ -24,8 +62,19 @@ router.use('/', express.static(path.join(__dirname, '/assets')))
 router.use(cors())
 router.use(logger)
 
-
 router.use(cookieParser());
+
+router.use(bodyParser.json({
+    limit: '5000mb'
+}));
+
+router.use(bodyParser.urlencoded({
+    limit: '5000mb',
+    parameterLimit: 1000000,
+    extended: true
+}));
+
+
 
 nunjucks.configure(__dirname + '/templates', {
     autoescape: true, express: router
@@ -37,6 +86,10 @@ router.use((req, res, next) => {
     res.append('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
+
+
+
+
 
 // routers 
 router.get('/', views.api_index)
@@ -89,6 +142,15 @@ router.put('/user/refresh', onlyAuth, views.api_user_refresh)
 // роутер для получения всех пользователей
 router.get('/users', [onlyAuth, onlyAdmin], views.api_user_get_all)
 
+
+//Роутер для сохранение статистики в конце игры
+router.post('/game/finishgame', onlyAuth, views.api_game_finishgame)
+
+router.get('*', function (req, res) {
+    res.status(400).json({
+        message: 'Не найдена страница'
+    })
+});
 
 export default router;
 
