@@ -30,7 +30,7 @@ try {
 // console.log(ifaces['']);
 
 // const PORT = 80;
-const PORT = 8000;
+const PORT = 8001;
 const HOSTNAME = '0.0.0.0';
 // const HOSTNAME = '172.16.16.5';
 // const DB_URL = 'mongodb+srv://root:pass@nodejsdb.ngo1hlm.mongodb.net/?retryWrites=true&w=majority';
