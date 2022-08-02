@@ -20,4 +20,4 @@ services:
     image: mongo:3.5
     ports:
       - "27017:27017"
-    command: mongod --port 27018 --bind_ip_all
+    command: mongod --port 27017 --bind_ip_all
