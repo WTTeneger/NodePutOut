@@ -67,9 +67,7 @@ app.get('*', function (req, res) {
 
 
 
-let db = await mongoose.connect('mongodb://0.0.0.0.0:27017/test-db');
-console.log();
-
+let db = mongoose.connect('mongodb://0.0.0.0:27017/test-db');
 // Create your Forest Admin agent
 async function startApp() {
     try {
