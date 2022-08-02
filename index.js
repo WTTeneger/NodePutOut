@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express'
 import router from "./router.js";
 import appRouter from "./app/urls.js";
@@ -22,7 +23,6 @@ import os from 'os';
 import bodyParser from 'body-parser';
 var ifaces = os.networkInterfaces();
 try {
-
     var local_addr = (ifaces.en0[1].address);
 } catch (e) {
     var local_addr = 'localhost';
@@ -43,6 +43,7 @@ app.use(express.json());
 app.use(bodyParser.json({
     limit: '50mb'
 }));
+
 
 app.use(bodyParser.urlencoded({
     limit: '50mb',
@@ -65,6 +66,8 @@ app.get('*', function (req, res) {
 });
 
 
+// console.log(require('dotenv').config());
+console.log(process.env);
 
 
 let db = await mongoose.connect('mongodb://127.0.0.1:27017/test-db');
