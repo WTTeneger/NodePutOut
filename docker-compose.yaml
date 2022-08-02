@@ -3,7 +3,7 @@ services:
   web:
     build:
       context: ./
-      target: dev
+      # target: dev
     volumes:
       - .:/src
     command: npm run start
