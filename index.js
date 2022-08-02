@@ -67,7 +67,7 @@ app.get('*', function (req, res) {
 
 
 
-let db = mongoose.connect('mongodb://127.0.0.1:27017/test-db').then(e => {
+let db = await mongoose.connect('mongodb://127.0.0.1:27017/test-db').then(e => {
     console.log(e.models);
 })
 
