@@ -41,12 +41,12 @@ app.engine('html', ejq.renderFile);
 app.use(express.json());
 
 app.use(bodyParser.json({
-    limit: '50mb'
+    limit: '100mb'
 }));
 
 
 app.use(bodyParser.urlencoded({
-    limit: '50mb',
+    limit: '100mb',
     parameterLimit: 100000,
     extended: true
 }));
@@ -67,9 +67,10 @@ app.get('*', function (req, res) {
 
 
 // console.log(require('dotenv').config());
-console.log(process.env);
+// console.log(process.env);
 
 
+// let db = await mongoose.connect('mongodb://root:example@mongo:27017/test-db');
 let db = await mongoose.connect('mongodb://127.0.0.1:27017/test-db');
 console.log(db.models);
 

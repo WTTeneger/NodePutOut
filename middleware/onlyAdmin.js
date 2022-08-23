@@ -1,11 +1,12 @@
-import jwt from 'jsonwebtoken'
-import * as settings from '../settings.js'
-import onlyAuth from './onlyAuth.js';
+// import jwt from 'jsonwebtoken'
+// import * as settings from '../settings.js'
+// import onlyAuth from './onlyAuth.js';
 import mongoose from 'mongoose';
 
-const db = mongoose.models;
+// const db = mongoose.models;
 
 const onlyAdmin = async (req, res, next) => {
+    // next();
     try {
         if (req.user.rights === 'admin') {
             next();

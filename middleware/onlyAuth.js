@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 const db = mongoose.models;
 
 const onlyAuth = async (req, res, next) => {
+    // next();
     try {
         let token_jwt = req.cookies['JWT-Token'];
 
